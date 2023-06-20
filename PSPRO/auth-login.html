@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/pages/auth.css">
+</head>
+
+<body>
+    <div id="auth">
+        <div class="row h-100">
+            <div class="col-lg-5 col-12">
+                <div id="auth-left">
+                    <h1 >เข้าสู่ระบบ.</h1>
+                    <p style="font-size:130%; color: black;" class="auth-subtitle mb-4">โปรแกรมจ้างเหมาก่อสร้างระบบไฟฟ้า.</p>
+
+                    <a href="4.คู่มือการใช้งานโปรแกรม 2565 (กลุ่มอัศวิน 285).pdf" target="_blank">คู่มือการใช้งานโปรแกรม</a>
+                    <br><br>
+
+                    <form action="login.php" method="post">
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" name="Username" placeholder="รหัสพนักงาน" required>
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" name="Password" placeholder="รหัสผ่าน" required>
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">เข้าสู่ระบบ</button>
+                    </form>
+                    <br><br><br>
+                    <h5>การไฟฟ้าส่วนภูมิภาคจังหวัดอุตรดิตถ์</h5>
+                    
+                    <p>โทร. 062-456-5253, 098-748-6945</p>
+                </div>
+            </div>
+            <div class="col-lg-7 d-none d-lg-block">
+                <div id="auth-right">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+
+START - automation started - Mon Jun 19 2023 11:47:38 GMT+0700 (SE Asia Standard Time)
+
+LIVE MODE - type done to quit
+ [RPA][STARTED]
+[RPA][0] - listening for inputs
+[RPA][1] - https://ddoc.pea.co.th/login
+[RPA][1] - listening for inputs
+[RPA][2] - exist_result = exist('//*[@id="mat-input-0"]').toString()
+[RPA][2] - listening for inputs
+[RPA][3] - dump exist_result to rpa_python.txt
+[RPA][3] - listening for inputs
+[RPA][4] - type //*[@id="mat-input-0"] as 511577
+[RPA][4] - listening for inputs
+[RPA][5] - exist_result = exist('//*[@id="mat-input-1"]').toString()
+[RPA][5] - listening for inputs
+[RPA][6] - dump exist_result to rpa_python.txt
+[RPA][6] - listening for inputs
+[RPA][7] - type //*[@id="mat-input-1"] as Pea@09101994+++
+[RPA][7] - listening for inputs
+[RPA][8] - exist_result = exist('/html/body/app-root/px-login/div/div/div/form/button').toString()
+[RPA][8] - listening for inputs
+[RPA][9] - dump exist_result to rpa_python.txt
+[RPA][9] - listening for inputs
+[RPA][10] - click /html/body/app-root/px-login/div/div/div/form/button
+[RPA][10] - listening for inputs
+[RPA][11] - exist_result = exist('/html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-mwp/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav-content/div[1]/div[1]/div/div[2]/div[1]/div/img').toString()
+[RPA][11] - listening for inputs
+[RPA][12] - dump exist_result to rpa_python.txt
+[RPA][12] - listening for inputs
+[RPA][13] - click /html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-mwp/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav-content/div[1]/div[1]/div/div[2]/div[1]/div/img
+[RPA][13] - listening for inputs
+[RPA][14] - exist_result = exist('/html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-inbox/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav-content/div/div/div/mat-list/p-datatable/div/div[1]/table/tbody/tr[1]/td[6]/span[2]/div[1]/div').toString()
+[RPA][14] - listening for inputs
+[RPA][15] - dump exist_result to rpa_python.txt
+[RPA][15] - listening for inputs
+[RPA][16] - click /html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-inbox/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav-content/div/div/div/mat-list/p-datatable/div/div[1]/table/tbody/tr[1]/td[6]/span[2]/div[1]/div
+[RPA][16] - listening for inputs
+[RPA][17] - exist_result = exist('/html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-saraban-content/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav/div[3]').toString()
+[RPA][17] - listening for inputs
+[RPA][18] - dump exist_result to rpa_python.txt
+[RPA][18] - listening for inputs
+[RPA][19] - click /html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-saraban-content/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav/div[3]
+[RPA][19] - listening for inputs
+[RPA][20] - exist_result = exist('//*[@id="mat-dialog-0"]/px-dialog-confirm/div/div[4]/button[1]/span').toString()
+[RPA][20] - listening for inputs
+[RPA][21] - dump exist_result to rpa_python.txt
+[RPA][21] - listening for inputs
+[RPA][22] - click //*[@id="mat-dialog-0"]/px-dialog-confirm/div/div[4]/button[1]/span
+[RPA][22] - listening for inputs
+[RPA][23] - exist_result = exist('//*[@id="mat-dialog-1"]/px-dialog-show-detail-rigister/div/div[4]/button[1]/span').toString()
+[RPA][23] - listening for inputs
+[RPA][24] - dump exist_result to rpa_python.txt
+[RPA][24] - listening for inputs
+[RPA][25] - click //*[@id="mat-dialog-1"]/px-dialog-show-detail-rigister/div/div[4]/button[1]/span
+[RPA][25] - listening for inputs
+[RPA][26] - exist_result = exist('/html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-inbox/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav-content/div/div/div/mat-list/p-datatable/div/div[1]/table/tbody/tr[1]/td[6]/span[2]/div[1]/div').toString()
+[RPA][26] - listening for inputs
+[RPA][27] - dump exist_result to rpa_python.txt
+[RPA][27] - listening for inputs
+[RPA][28] - click /html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-inbox/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav-content/div/div/div/mat-list/p-datatable/div/div[1]/table/tbody/tr[1]/td[6]/span[2]/div[1]/div
+[RPA][28] - listening for inputs
+[RPA][29] - exist_result = exist('/html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-saraban-content/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav/div[3]').toString()
+[RPA][29] - listening for inputs
+[RPA][30] - dump exist_result to rpa_python.txt
+[RPA][30] - listening for inputs
+[RPA][31] - click /html/body/app-root/px-main/td-layout/mat-sidenav-container/mat-sidenav-content/td-layout-nav/div/div/px-saraban-content/td-layout-manage-list/mat-sidenav-container/mat-sidenav-content/div/div/mat-sidenav-container/mat-sidenav/div[3]
+[RPA][31] - listening for inputs
+[RPA][32] - exist_result = exist('//*[@id="mat-dialog-0"]/px-dialog-confirm/div/div[4]/button[1]/span').toString()
