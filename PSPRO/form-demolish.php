@@ -4,13 +4,21 @@ session_start();
 
 if (!$_SESSION["UserID"]) { //check session
 
-  Header("Location: formlogin.php"); //ไม่พบผู้ใช้กระโดดกลับไปหน้า login form 
+  Header("Location: auth-login.html"); //ไม่พบผู้ใช้กระโดดกลับไปหน้า login form 
 
 }
+
 include('connection.php');
+
 
 $user = $_SESSION["User"];
 $id = $_SESSION["ID"];
+
+$sqlcon = "SELECT * FROM contract WHERE Id = $id AND ( User = '$user' )";
+$resultcon = $conn->query($sqlcon);
+$rowcon = $resultcon->fetch_assoc();
+
+
 
 
 $sql3 = "SELECT * FROM data285 WHERE  id = $id AND ( user = '$user' )";
@@ -18,21 +26,8 @@ $result3 = $conn->query($sql3);
 
 $row3 = $result3->fetch_assoc();
 
-$sqlcon = "SELECT * FROM contract WHERE Id = $id AND ( User = '$user' )";
-$resultcon = $conn->query($sqlcon);
-$rowcon = $resultcon->fetch_assoc();
-
-
-if (isset($row3["Employee"])) {
-  $ID_employee = $row3["Employee"];
-
-
-  $sql1 = "SELECT * FROM employee WHERE ID=$ID_employee";
-  $result1 = $conn->query($sql1);
-  $row1 = $result1->fetch_assoc();
-}
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +35,6 @@ if (isset($row3["Employee"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Power System Procurement and Construction Program</title>
-
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -51,12 +45,6 @@ if (isset($row3["Employee"])) {
   <link rel="stylesheet" href="assets/css/app.css">
   <link rel="stylesheet" href="assets/css/text.css">
   <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
-  <style>
-    input:last-child::placeholder {
-      color: #DADDE0;
-    }
-  </style>
-
 </head>
 
 <body>
@@ -93,10 +81,10 @@ if (isset($row3["Employee"])) {
                 <li class="submenu-item ">
                   <a href="form-wbs.php">ระบุองค์ประกอบหมายเลขงาน WBS</a>
                 </li>
-                <li class="submenu-item active">
+                <li class="submenu-item ">
                   <a href="form-employees.php">ผู้ควบคุมงาน</a>
                 </li>
-                <li class="submenu-item ">
+                <li class="submenu-item active ">
                   <a href="form-center.php">แต่งตั้งคณะกรรมการราคากลาง</a>
                 </li>
                 <li class="submenu-item ">
@@ -214,7 +202,7 @@ if (isset($row3["Employee"])) {
         <div class="page-title">
           <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-              <h3>ข้อมูลผู้ควบคุมงาน</h3>
+              <h3>แต่งตั้งคณะกรรมการตรวจรื้อถอน</h3>
             </div>
           </div>
         </div>
@@ -228,94 +216,126 @@ if (isset($row3["Employee"])) {
                 </div>
                 <div class="card-content">
                   <div class="card-body">
-                    <form class="form form-horizontal" action="addemployee.php" method="POST">
+                    <form class="form form-horizontal" action="adddemolish.php" method="POST">
                       <div class="form-body">
                         <div class="row">
                           <div class="row">
-                            <div class="col-md-2">
-                              <label>รหัสพนักงาน</label>
+                            <div class="col-md-1">
+                              <label>อนุมัติรื้อถอน </label>
                             </div>
                             <div class="col-md-2 form-group">
-                              <input type="number" id="first-name" onkeyup="serchEmployee('ID_EMPLOYEE')"
-                                class="form-control" name="ID_EMPLOYEE" value="<?php if (isset($row1["ID"])) {
-                                  echo $row1["ID"];
-                                } ?>" required>
-                              <span id="search_result_id" class="search_result"></span>
+                              <input type="text" class="form-control" name="Demolish" value="<?php if (isset($row3["Demolish"])) {
+                                echo $row3["Demolish"];
+                              } ?>" required>
+                            </div>
+                            <div class="col-md-1 ">
+                              <label>ลงวันที่</label>
+                            </div>
+                            <div class="col-md-2 form-group">
+                              <input type="date" class="form-control" name="Demolish_date" value="<?php if (isset($row3["Demolish_date"])) {
+                                echo $row3["Demolish_date"];
+                              } ?>" required>
+                            </div>
+                            <div class="col-md-1 ">
+                              <label>วันที่ สำรวจแล้วเสร็จ</label>
+                            </div>
+                            <div class="col-md-2 form-group">
+                              <input type="date" class="form-control" name="Demolish_finish" value="<?php if (isset($row3["Demolish_finish"])) {
+                                echo $row3["Demolish_finish"];
+                              } ?>" required>
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                               <label>ชื่อ</label>
                             </div>
-                            <div class="col-md-3 form-group">
-                              <input type="text" class="form-control" name="FNAME" value="<?php if (isset($row1["Fname"])) {
-                                echo $row1["Fname"];
-                              } ?>" required>
+                            <div class="col-md-2 form-group">
+                              <input type="text" onkeyup="serchcheck('FName_Demolish_Check')" class="form-control"
+                                name="FName_Demolish_Check" placeholder="" value="<?php if (isset($row3["FName_Demolish_Check"])) {
+                                  echo $row3["FName_Demolish_Check"];
+                                } ?>" required>
+                              <span id="search_result_CheckName" class="search_Check">
                             </div>
-                            <div class="col-md-1 d-flex justify-content-end">
+                            <div class="col-md-1">
                               <label>นามสกุล</label>
                             </div>
-                            <div class="col-md-3 form-group">
-                              <input type="text" class="form-control" name="LNAME" value="<?php if (isset($row1["Lname"])) {
-                                echo $row1["Lname"];
+                            <div class="col-md-2 form-group">
+                              <input type="text" class="form-control" name="LName_Demolish_Check" placeholder="" value="<?php if (isset($row3["LName_Demolish_Check"])) {
+                                echo $row3["LName_Demolish_Check"];
                               } ?>" required>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                               <label>ตำแหน่ง</label>
                             </div>
-                            <div class="col-md-3 form-group">
-                              <input type="text" class="form-control" name="RANK" value="<?php if (isset($row1["Rank"])) {
-                                echo $row1["Rank"];
+                            <div class="col-md-2 form-group">
+                              <input type="text" class="form-control" name="Rank_Demolish_Check" value="<?php if (isset($row3["Rank_Demolish_Check"])) {
+                                echo $row3["Rank_Demolish_Check"];
                               } ?>" required>
+                            </div>
+                            <div class="col-md-3 ">
+                              <label>ประธานกรรมการ</label>
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-md-2">
-                              <label>สังกัดแผนก(ชื่อเต็ม)</label>
-                            </div>
-                            <div class="col-md-3 form-group">
-                              <input type="text" class="form-control" name="FULLNAME" placeholder="แผนกก่อสร้าง" value="<?php if (isset($row1["Department"])) {
-                                echo $row1["Department"];
-                              } ?>" required>
-                            </div>
-                            <div class="col-md-2">
-                              <label>สังกัดแผนก(ชื่อย่อ)</label>
+                            <div class="col-md-1">
+                              <label>ชื่อ</label>
                             </div>
                             <div class="col-md-2 form-group">
-                              <input type="text" class="form-control" name="DEPARTMENT" placeholder="กส" value="<?php if (isset($row1["Under"])) {
-                                echo $row1["Under"];
+                              <input type="text" onkeyup="serchcheck('FName_Demolish_Check2')" class="form-control"
+                                name="FName_Demolish_Check2" placeholder="" value="<?php if (isset($row3["FName_Demolish_Check2"])) {
+                                  echo $row3["FName_Demolish_Check2"];
+                                } ?>" required>
+                              <span id="search_result_CheckName2" class="search_Check">
+                            </div>
+                            <div class="col-md-1">
+                              <label>นามสกุล</label>
+                            </div>
+                            <div class="col-md-2 form-group">
+                              <input type="text" class="form-control" name="LName_Demolish_Check2" value="<?php if (isset($row3["LName_Demolish_Check2"])) {
+                                echo $row3["LName_Demolish_Check2"];
                               } ?>" required>
+                            </div>
+                            <div class="col-md-1">
+                              <label>ตำแหน่ง</label>
+                            </div>
+                            <div class="col-md-2 form-group">
+                              <input type="text" class="form-control" name="Rank_Demolish_Check2" value="<?php if (isset($row3["Rank_Demolish_Check2"])) {
+                                echo $row3["Rank_Demolish_Check2"];
+                              } ?>" required>
+                            </div>
+                            <div class="col-md-3 ">
+                              <label>กรรมการ</label>
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-md-3">
-                              <label>สังกัดการไฟฟ้า(ชื่อย่อ)</label>
+                            <div class="col-md-1">
+                              <label>ชื่อ</label>
                             </div>
                             <div class="col-md-2 form-group">
-                              <input type="text" class="form-control" name="pea" placeholder="กฟจ.อต" value="<?php if (isset($row1["pea"])) {
-                                echo $row1["pea"];
-                              } ?>" required>
+                              <input type="text" onkeyup="serchcheck('FName_Demolish_Check3')" class="form-control"
+                                name="FName_Demolish_Check3" placeholder="" value="<?php if (isset($row3["FName_Demolish_Check3"])) {
+                                  echo $row3["FName_Demolish_Check3"];
+                                } ?>" required>
+                              <span id="search_result_CheckName3" class="search_Check">
                             </div>
-
-                            <div class="col-md-2 d-flex justify-content-end">
-                              <label>เขต</label>
+                            <div class="col-md-1">
+                              <label>นามสกุล</label>
                             </div>
                             <div class="col-md-2 form-group">
-                              <input type="text" class="form-control" name="county" placeholder="น.2" value="<?php if (isset($row1["pea"])) {
-                                echo $row1["county"];
+                              <input type="text" class="form-control" name="LName_Demolish_Check3" value="<?php if (isset($row3["LName_Demolish_Check3"])) {
+                                echo $row3["LName_Demolish_Check3"];
                               } ?>" required>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-2">
-                              <label>เบอร์โทรแผนก</label>
+                            <div class="col-md-1">
+                              <label>ตำแหน่ง</label>
                             </div>
-                            <div class="col-md-3 form-group">
-                              <input type="number" class="form-control" name="TEL" value="<?php if (isset($row1["phone"])) {
-                                echo $row1["phone"];
+                            <div class="col-md-2 form-group">
+                              <input type="text" class="form-control" name="Rank_Demolish_Check3" value="<?php if (isset($row3["Rank_Demolish_Check3"])) {
+                                echo $row3["Rank_Demolish_Check3"];
                               } ?>" required>
+                            </div>
+                            <div class="col-md-3 ">
+                              <label>กรรมการ</label>
                             </div>
                           </div>
 
@@ -507,11 +527,11 @@ if (isset($row3["Employee"])) {
 
     function serchcheck(type) {
       switch (type) {
-        case "FName_Chairman_Center_Price":
+        case "FName_Demolish_Check":
 
           //request  -> find employee form id
           checked = 1;
-          const CheckName = document.getElementsByName('FName_Chairman_Center_Price')[0].value;
+          const CheckName = document.getElementsByName('FName_Demolish_Check')[0].value;
           console.log(CheckName);
           if (CheckName.length >= 4) {
             fetchCheckByName(CheckName);
@@ -524,10 +544,10 @@ if (isset($row3["Employee"])) {
           }
           break;
 
-        case "FName_Director_1":
+        case "FName_Demolish_Check2":
           //request  -> find employee form id
           checked = 2;
-          const CheckName2 = document.getElementsByName('FName_Director_1')[0].value;
+          const CheckName2 = document.getElementsByName('FName_Demolish_Check2')[0].value;
           console.log(CheckName2);
           if (CheckName2.length >= 4) {
             fetchCheckByName(CheckName2);
@@ -540,10 +560,10 @@ if (isset($row3["Employee"])) {
           }
           break;
 
-        case "FName_Director_2":
+        case "FName_Demolish_Check3":
           //request  -> find employee form id
           checked = 3;
-          const CheckName3 = document.getElementsByName('FName_Director_2')[0].value;
+          const CheckName3 = document.getElementsByName('FName_Demolish_Check3')[0].value;
           console.log(CheckName3);
           if (CheckName3.length >= 4) {
             fetchCheckByName(CheckName3);
@@ -688,17 +708,17 @@ if (isset($row3["Employee"])) {
       const CheckSelected = datacheck[key];
 
       if (checked == 1) {
-        document.getElementsByName('FName_Chairman_Center_Price')[0].value = CheckSelected.fname
-        document.getElementsByName('Lname_Chairman_Center_Price')[0].value = CheckSelected.lname
-        document.getElementsByName('Rank_C_C')[0].value = CheckSelected.rank
+        document.getElementsByName('FName_Demolish_Check')[0].value = CheckSelected.fname
+        document.getElementsByName('LName_Demolish_Check')[0].value = CheckSelected.lname
+        document.getElementsByName('Rank_Demolish_Check')[0].value = CheckSelected.rank
       } else if (checked == 2) {
-        document.getElementsByName('FName_Director_1')[0].value = CheckSelected.fname
-        document.getElementsByName('LName_Director_1')[0].value = CheckSelected.lname
-        document.getElementsByName('Rank_D_C1')[0].value = CheckSelected.rank
+        document.getElementsByName('FName_Demolish_Check2')[0].value = CheckSelected.fname
+        document.getElementsByName('LName_Demolish_Check2')[0].value = CheckSelected.lname
+        document.getElementsByName('Rank_Demolish_Check2')[0].value = CheckSelected.rank
       } else if (checked == 3) {
-        document.getElementsByName('FName_Director_2')[0].value = CheckSelected.fname
-        document.getElementsByName('LName_Director_2')[0].value = CheckSelected.lname
-        document.getElementsByName('Rank_D_C2')[0].value = CheckSelected.rank
+        document.getElementsByName('FName_Demolish_Check3')[0].value = CheckSelected.fname
+        document.getElementsByName('LName_Demolish_Check3')[0].value = CheckSelected.lname
+        document.getElementsByName('Rank_Demolish_Check3')[0].value = CheckSelected.rank
       } else if (checked == 4) {
         document.getElementsByName('FName_Chairman_Check')[0].value = CheckSelected.fname
         document.getElementsByName('LName_Chairman_Check')[0].value = CheckSelected.lname

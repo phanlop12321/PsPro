@@ -150,6 +150,7 @@ $phpWord->addFontStyle(
 );
 
 $cellHCentered2 = array('spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
+$cellHCentered1 = array('align' => 'center', 'spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
 
 $section = $phpWord->addSection(['marginTop' => 100, 'marginLeft' => 500, 'marginRight' => 500, 'marginBottom' => 100]);
 $section->addImage('img/pea.jpg', ['width' => 100, 'height' => 100]);
@@ -186,10 +187,10 @@ $monney = 0;
 $row6 = $result6->fetch_assoc();
 
 
-$section->addText(htmlspecialchars("\tตามอนุมัติที่___________________ให้ทำการรื้อถอนไฟฟ้า" . $row3["Name"] . " ที่บริเวณ " . $row3["Address"] . " โครงการหรืองบผู้ใช้ไฟ หมายเลขงานรื้อถอน " . $row6["wbs"] . " โครงข่าย " . $row6["network"] . " ในระบบไฟฟ้า ดังนี้"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t□ ระบบสายส่ง____KV. ระยะทาง________วงจรกิโลเมตร"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t□ ระบบจำหน่าย (22,33 KV.,220 V.)"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t□ แรงสูง _____KV.  ระยะทาง________วงจรกิโลเมตร"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\tตามอนุมัติที่ " . $row3["Demolish"] . " ลว. " . $row3["Demolish_date"] . " ให้ทำการรื้อถอนไฟฟ้า" . $row3["Name"] . " ที่บริเวณ " . $row3["Address"] . " โครงการหรืองบผู้ใช้ไฟ หมายเลขงานรื้อถอน " . $row6["wbs"] . " โครงข่าย " . $row6["network"] . " ในระบบไฟฟ้า ดังนี้"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t□ ระบบสายส่ง____kV. ระยะทาง________วงจรกิโลเมตร"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t□ ระบบจำหน่าย (22,33 kV.,220 V.)"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t□ แรงสูง _____kV.  ระยะทาง________วงจรกิโลเมตร"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t\t□ เเรงต่ำ _____ V.  ระยะทาง________วงจรกิโลเมตร"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t\t□ หม้อแปลง จำนวน _____ชุด"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t\t□ อื่นๆ _____________"), $fontStyleName1, $cellHCentered2);
@@ -200,9 +201,9 @@ $section->addText(htmlspecialchars("\t\t□ Vaccuum            จำนวน__
 $section->addText(htmlspecialchars("\t ระบบไฟฟ้าภายในสถานีจ่ายไฟ"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("จึงเรียนมาเพื่อโปรดพิจารณาสั่งการต่อไป"), $fontStyleName1, $cellHCentered2);
 $section->addTextBreak(1);
-$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________________ เจ้าหน้าที่"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\t           (                                            )"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\tตำแหน่ง ___________________________"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("ลงชื่อ     __________________________ เจ้าหน้าที่"), $fontStyleName1, $cellHCentered1);
+$section->addText(htmlspecialchars("( " . $row1["Fname"] . " " . $row1["Lname"] . " )"), $fontStyleName1, $cellHCentered1);
+$section->addText(htmlspecialchars("ตำแหน่ง " . $row1["Rank"] . " ผ" . $row1["Under"] . "." . $row1["pea"]), $fontStyleName1, $cellHCentered1);
 
 $styleTable = array('cellMargin' => 18);
 $phpWord->addTableStyle('Fancy Table', $styleTable);
@@ -212,11 +213,11 @@ $table1 = $section->addTable('Fancy Table');
 $table1->addRow();
 $table1->addCell(11000, ['borderTopSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\tอนุมัติให้พนักงานตามรายชื่อต่อท้ายนี้เป็นผู้สำรวจหรือร่วมกันสำรวจ"), null, $cellHCentered2);
 $table1->addRow();
-$table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\t\t\t\t 1. นาย____________________________________"), null, $cellHCentered2);
+$table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\t\t\t\t 1. นาย " . $row3["FName_Demolish_Check"] . " " . $row3["LName_Demolish_Check"] . "    ตำแหน่ง    ( " . $row3["Rank_Demolish_Check"] . " )"), null, $cellHCentered2);
 $table1->addRow();
-$table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\t\t\t\t 2. นาย____________________________________"), null, $cellHCentered2);
+$table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\t\t\t\t 2. นาย " . $row3["FName_Demolish_Check2"] . " " . $row3["LName_Demolish_Check2"] . "    ตำแหน่ง    ( " . $row3["Rank_Demolish_Check2"] . " )"), null, $cellHCentered2);
 $table1->addRow();
-$table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\t\t\t\t 3. นาย____________________________________"), null, $cellHCentered2);
+$table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("\t\t\t\t 3. นาย " . $row3["FName_Demolish_Check3"] . " " . $row3["LName_Demolish_Check3"] . "    ตำแหน่ง    ( " . $row3["Rank_Demolish_Check3"] . " )"), null, $cellHCentered2);
 $table1->addRow();
 $table1->addCell(11000, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(""), null, $cellHCentered2);
 $table1->addRow();

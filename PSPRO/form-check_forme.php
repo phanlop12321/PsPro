@@ -116,6 +116,9 @@ $num_rows = mysqli_num_rows($result9);
                                     <a href="form-vender.php">ข้อมูลผู้รับจ้าง</a>
                                 </li>
                                 <li class="submenu-item ">
+                                    <a href="form-demolish.php">แต่งตั้งคณะกรรมการตรวจรื้อถอน</a>
+                                </li>
+                                <li class="submenu-item ">
                                     <a href="form-contract.php">ข้อมูลสัญญาจ้าง</a>
                                 </li>
                                 <li class="submenu-item active">
@@ -173,6 +176,30 @@ $num_rows = mysqli_num_rows($result9);
                                                             <li class="submenu-item ">
                                                                 <a href="../PHPSpreadsheet/excel.php?create=<?= $id; ?>" target="_blank">จค 01</a>
                                                             </li>
+                                                            <!-- <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordG.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า</a>
+                                                            </li> -->
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                                                            </li>
+                                                            <!-- <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH_2.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                                                            </li> -->
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH_3.php?create=<?= $id; ?>"
+                                                                    target="_blank">รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า</a>
+                                                            </li>
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordI.php?create=<?= $id; ?>"
+                                                                    target="_blank">แบบฟอร์มตรวจสอบมาตรฐานงานก่อสร้างและปรับปรุงระบบจำหน่าย</a>
+                                                            </li>
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordJ.php?create=<?= $id; ?>"
+                                                                    target="_blank">การส่งมอบงานก่อสร้างระบบไฟฟ้าและขออนุมัติจ่ายกระแสไฟฟ้า</a>
+                                                            </li>
                                                         <?php }
                                                     }
                                                 }
@@ -218,9 +245,10 @@ $num_rows = mysqli_num_rows($result9);
                                                     <h6>ใบสั่งจ้าง(Purchase Order No)</h6>
                                                 </div>
                                                 <div class="col-md-3 form-group">
-                                                    <input type="text" class="form-control" name="po" value="<?php if (isset($row3["po"])) {
-                                                        echo $row3["po"];
-                                                    } ?>" required>
+                                                    <input type="text" class="form-control" name="po" maxlength="10"
+                                                        value="<?php if (isset($row3["po"])) {
+                                                            echo $row3["po"];
+                                                        } ?>" required>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <h6>ลงวันที่</h6>
@@ -232,50 +260,45 @@ $num_rows = mysqli_num_rows($result9);
                                                 </div>
                                             </div>
                                             <?php
+                                            $sql1234 = "SELECT * FROM new285data WHERE    user = $user  AND ( userid = $id  ) GROUP BY network";
+                                            $result1234 = $conn->query($sql1234);
 
                                             $ii = 1;
-                                            while ($row5 = $result15->fetch_assoc()) {
+                                            while ($row5 = $result1234->fetch_assoc()) {
+                                                ?>
 
-
-
-                                                if (is_array($row5)) {
-
-
-
-                                                    $NETWORK = $row5["NETWORK"];
-
-
-
-                                                    $sql = "SELECT * FROM end_data WHERE network =  $NETWORK  ";
-                                                    $result = $conn->query($sql);
-
-                                                    ?>
-
-                                                    <div>
-                                                        <table class="table table-striped">
-                                                            <div class="row">
-                                                                <div class="form-group col-md-3">
-                                                                    <input type="text" class="form-control"
-                                                                        value="WBS <?= $row5["WBS"]; ?>" disabled>
-                                                                </div>
-                                                                <div class="form-group col-md-3">
-                                                                    <input type="text" class="form-control"
-                                                                        value="โครงข่าย <?= $row5["NETWORK"]; ?>" disabled>
-                                                                </div>
+                                                <div>
+                                                    <table class="table table-striped">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-3">
+                                                                <input type="text" class="form-control"
+                                                                    value="WBS <?= $row5["wbs"]; ?>" disabled>
                                                             </div>
-                                                            <tr>
-                                                                <th>ที่</th>
-                                                                <th>แผนก</th>
-                                                                <th>รายละเอียด</th>
-                                                                <th>จำนวน</th>
-                                                                <th>ผลการตรวจรับ</th>
-                                                            </tr>
-                                                            <?php
-
-
-                                                            // output data of each row
-                                                            $i = 1;
-                                                            while ($row = $result->fetch_assoc()) {
+                                                            <div class="form-group col-md-3">
+                                                                <input type="text" class="form-control"
+                                                                    value="โครงข่าย <?= $row5["network"]; ?>" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <tr>
+                                                            <th>ที่</th>
+                                                            <th>แผนก</th>
+                                                            <th>ประเภทงาน</th>
+                                                            <th>รายละเอียด</th>
+                                                            <th>จำนวน</th>
+                                                            <th>ผลการตรวจรับ</th>
+                                                        </tr>
+                                                        <?php
+                                                        $sql = "SELECT * FROM new285data WHERE network = {$row5["network"]} AND ( user = $user )  AND ( userid = $id  )";
+                                                        $result = $conn->query($sql);
+                                                        // output data of each row
+                                                        $i = 1;
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            $data = $row["id"];
+                                                            $sqldata = "SELECT * FROM data WHERE ID = $data";
+                                                            if ($resultdata = $conn->query($sqldata)) {
+                                                                $rowdata = $resultdata->fetch_assoc();
+                                                            }
+                                                            if ($row["price"] != 0) {
 
                                                                 ?>
                                                                 <tr>
@@ -286,44 +309,54 @@ $num_rows = mysqli_num_rows($result9);
                                                                         <?= $row["job"]; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <?= $row["name"]; ?>
+                                                                        <?= $row["type"]; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <?= $row["quantity"]; ?>
+                                                                        <?php if (isset($rowdata["NAME"])) {
+                                                                            echo $rowdata["NAME"];
+                                                                        } else {
+                                                                            echo $row["name"];
+                                                                        }
+                                                                        ; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?= $row["qty"]; ?>
                                                                     </td>
                                                                     <td>
                                                                         <input type='text' class="form-control"
-                                                                            name='qty[<?= $ii ?>]' value="<?php if (isset($row["qty"])) {
-                                                                                  echo $row["qty"];
+                                                                            name='qty[<?= $ii ?>]' value="<?php if (isset($row["newqty"])) {
+                                                                                  echo $row["newqty"];
                                                                               } ?>" required>
                                                                         <input type="hidden" name='id[<?= $ii ?>]'
                                                                             value="<?= $row["id"]; ?>">
                                                                         <input type="hidden" name='network[<?= $ii ?>]'
-                                                                            value="<?= $row5["NETWORK"]; ?>">
+                                                                            value="<?= $row["network"]; ?>">
                                                                     </td>
                                                                 </tr>
                                                                 <?php
                                                                 $i = $i + 1;
                                                                 $ii++;
-                                                                $price = $price + $row["price_no_v"];
-                                                                $vat = $vat + $row["vat"];
-                                                                $price_abd_vat = $price_abd_vat + $row["price_and_v"];
+
                                                             }
-                                                            ?>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <?php
-                                                }
+                                                        }
+
+
+                                                        ?>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                                <?php
+
                                             } ?>
                                             <input type="hidden" name="count" value="<?= $ii ?>">
                                             <h6>

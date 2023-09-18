@@ -202,7 +202,7 @@ $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderR
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addRow();
-$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("1.3 การติดตั้งเหล็กรับสายล่าฟ้า (เหล็กฉาก,เหล็กรูปรางน้ำ)", $fontStyleName1, $cellHCentered2);
+$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("1.3 การติดตั้งเหล็กรับสายล่อฟ้า (เหล็กฉาก,เหล็กรูปรางน้ำ)", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
@@ -212,12 +212,12 @@ $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderR
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addRow();
-$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("1.5 การฝังสมอบก และประกอบยึดโยงสายล่าฟ้า", $fontStyleName1, $cellHCentered2);
+$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("1.5 การฝังสมอบก และประกอบยึดโยงสายล่อฟ้า", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addRow();
-$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("1.6 การพาดสายไฟ ระยะหน่อนยาน", $fontStyleName1, $cellHCentered2);
+$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("1.6 การพาดสายไฟ ระยะหย่อนยาน", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
@@ -247,7 +247,7 @@ $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderR
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addRow();
-$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("   - ระยะห่างสายด้านข้ากับสิ่งก่อสร้างต่างๆ", $fontStyleName1, $cellHCentered2);
+$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("   - ระยะห่างสายด้านข้างกับสิ่งก่อสร้างต่างๆ", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
@@ -457,7 +457,7 @@ $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderR
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addRow();
-$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("3.3 การพาดสายแรงสูงเข้าหม้อแหลง และลำดับเฟส", $fontStyleName1, $cellHCentered2);
+$table2->addCell(5000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("3.3 การพาดสายแรงสูงเข้าหม้อแปลง และลำดับเฟส", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(3000, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
 $table2->addCell(1500, ['borderLeftSize' => 6, 'borderRightSize' => 6])->addText("", $fontStyleName1, $cellHCentered2);
@@ -597,6 +597,6 @@ $table4->addCell(4500, ['borderBottomSize' => 6, 'borderLeftSize' => 6, 'borderR
 
 // Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx');
+$objWriter->save('tแบบฟอร์มตรวจสอบมาตรฐานงานก่อสร้างและปรับปรุงระบบจำหน่าย.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'tแบบฟอร์มตรวจสอบมาตรฐานงานก่อสร้างและปรับปรุงระบบจำหน่าย.docx';</script>";

@@ -30,7 +30,8 @@ if (isset($_POST['Username'])) {
   //รับค่า user & password
   $Username = $conn->real_escape_string($_POST['Username']);
   $Password = $conn->real_escape_string($_POST['Password']);
-  $sql = "SELECT * FROM user Where Username='" . $Username . "' ";
+  echo ($_POST['Username']);
+  $sql = "SELECT * FROM user WHERE Username=$Username ";
 
   $result = mysqli_query($conn, $sql);
 
@@ -43,20 +44,22 @@ if (isset($_POST['Username'])) {
       $_SESSION["Userlevel"] = $row["Userlevel"];
       $_SESSION["Depratment"] = $row["Depratment"];
       echo "===";
+      echo ($_SESSION["Userlevel"]);
 
       if ($_SESSION["Userlevel"]) { //ถ้าเป็น admin ให้กระโดดไปหน้า admin_page.php
-        Header("Location: index.php");
+        //  Header("Location: index.php");
       } else {
-        Header("Location: auth-login.html"); //user & password incorrect back to login again
+        //   Header("Location: auth-login.html"); //user & password incorrect back to login again
       }
     } else {
-      Header("Location: auth-login.html"); //user & password incorrect back to login again
+      //  Header("Location: auth-login.html"); //user & password incorrect back to login again
     }
   } else {
-    Header("Location: auth-login.html"); //user & password incorrect back to login again
+    echo ("can not findff");
+    //  Header("Location: auth-login.html"); //user & password incorrect back to login again
   }
 } else {
-  Header("Location: auth-login.html"); //user & password incorrect back to login again
+  // Header("Location: auth-login.html"); //user & password incorrect back to login again
 }
 
 ?>

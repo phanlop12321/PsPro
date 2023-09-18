@@ -187,7 +187,7 @@ $styleTable = array('cellMargin' => 18);
 $phpWord->addTableStyle('Fancy Table', $styleTable);
 
 
-$section->addText(htmlspecialchars("\tตามคำสั่ง_____________________________________ ให้กระผมดำเนินการก่อสร้าง/ปรับปรุงระบบไฟฟ้า " . $row3["Name"] . " ตามอนุมัติที่ ______________________ หมายเลขงาน __________________________ งบ ___________ ผู้ใช้ไฟลงทุน _____________ บาท โดยผู้ใช้ไฟนำเงินมาชำระครบถ้วนแล้ว จำนวน ____________________ บาท ตามใบเสร็จรับเงินที่ ________________________ ลว. _______________ บัดนี้ กระผมได้ดำเนินการฯเสร็จเรียบร้อยแล้ว จึงขอส่งมอบงานก่อสร้างระบบไฟฟ้าและอุปกรณ์ไฟฟ้า ดังรายการต่อไปนี้."), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\tตามคำสั่ง " . $row3["Construct"] . " ลว. " . $row3["Construct_Date"] . " ให้กระผมดำเนินการก่อสร้าง/ปรับปรุงระบบไฟฟ้า " . $row3["Name"] . " ตามอนุมัติที่ ______________________ หมายเลขงาน __________________________ งบ ___________ ผู้ใช้ไฟลงทุน _____________ บาท โดยผู้ใช้ไฟนำเงินมาชำระครบถ้วนแล้ว จำนวน ____________________ บาท ตามใบเสร็จรับเงินที่ ________________________ ลว. _______________ บัดนี้ กระผมได้ดำเนินการฯเสร็จเรียบร้อยแล้ว จึงขอส่งมอบงานก่อสร้างระบบไฟฟ้าและอุปกรณ์ไฟฟ้า ดังรายการต่อไปนี้."), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("1. ระบบไฟฟ้าแรงสูง_____________เควี. รวมระยะทาง__________วงจร/กม."), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("   เสา คอร. ขนาด ____________ม. ____________ต้น __________ม. ____________ต้น"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("2. ระบบไฟฟ้าแรงต่ำง_____________เควี. รวมระยะทาง__________วงจร/กม."), $fontStyleName1, $cellHCentered2);
@@ -203,8 +203,8 @@ $section->addText(htmlspecialchars("   (  ) รายงานปิดงาน
 $section->addText(htmlspecialchars("6. อื่นๆ ___________________________________________________________________________________"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("   จึงเรียนมาเพื่อโปรดดำเนินการต่อไป"), $fontStyleName1, $cellHCentered2);
 $section->addTextBreak(1);
-$section->addText(htmlspecialchars("( นาย________________________ )"), $fontStyleName1, $cellHCentered1);
-$section->addText(htmlspecialchars(" ตำแหน่ง "), $fontStyleName1, $cellHCentered1);
+$section->addText(htmlspecialchars("( " . $row1["Fname"] . " " . $row1["Lname"] . " )"), $fontStyleName1, $cellHCentered1);
+$section->addText(htmlspecialchars(" ตำแหน่ง " . $row1["Rank"] . " ผ" . $row1["Under"] . "." . $row1["pea"]), $fontStyleName1, $cellHCentered1);
 
 
 $table1 = $section->addTable('Fancy Table');
@@ -243,6 +243,6 @@ $table1->addCell(5000, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'border
 $table1->addCell(6000, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(""), null, $cellHCentered2);
 // Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx');
+$objWriter->save('การส่งมอบงานก่อสร้างระบบไฟฟ้าและขออนุมัติจ่ายกระแสไฟฟ้า.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'การส่งมอบงานก่อสร้างระบบไฟฟ้าและขออนุมัติจ่ายกระแสไฟฟ้า.docx';</script>";

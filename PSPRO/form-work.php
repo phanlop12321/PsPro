@@ -40,6 +40,11 @@ $rowcon = $resultcon->fetch_assoc();
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/text.css">
+    <style>
+        input:last-child::placeholder {
+            color: #DADDE0;
+        }
+    </style>
 </head>
 
 <body>
@@ -90,6 +95,9 @@ $rowcon = $resultcon->fetch_assoc();
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="form-vender.php">ข้อมูลผู้รับจ้าง</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-demolish.php">แต่งตั้งคณะกรรมการตรวจรื้อถอน</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="form-contract.php">ข้อมูลสัญญาจ้าง</a>
@@ -148,6 +156,30 @@ $rowcon = $resultcon->fetch_assoc();
                                                         <?php if (isset($row3["po"])) { ?>
                                                             <li class="submenu-item ">
                                                                 <a href="../PHPSpreadsheet/excel.php?create=<?= $id; ?>" ta rget="_blank">จค 01</a>
+                                                            </li>
+                                                            <!-- <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordG.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า</a>
+                                                            </li> -->
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                                                            </li>
+                                                            <!-- <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH_2.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                                                            </li> -->
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH_3.php?create=<?= $id; ?>"
+                                                                    target="_blank">รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า</a>
+                                                            </li>
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordI.php?create=<?= $id; ?>"
+                                                                    target="_blank">แบบฟอร์มตรวจสอบมาตรฐานงานก่อสร้างและปรับปรุงระบบจำหน่าย</a>
+                                                            </li>
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordJ.php?create=<?= $id; ?>"
+                                                                    target="_blank">การส่งมอบงานก่อสร้างระบบไฟฟ้าและขออนุมัติจ่ายกระแสไฟฟ้า</a>
                                                             </li>
                                                         <?php }
                                                     }
@@ -225,9 +257,10 @@ $rowcon = $resultcon->fetch_assoc();
                                                             <label>ปี พ.ศ. (25xx)</label>
                                                         </div>
                                                         <div class="col-md-2 form-group">
-                                                            <input type="number" class="form-control" name="year" value="<?php if (isset($row3["year"])) {
-                                                                echo $row3["year"];
-                                                            } ?>" required>
+                                                            <input type="number" class="form-control" name="year"
+                                                                placeholder="66" value="<?php if (isset($row3["year"])) {
+                                                                    echo $row3["year"];
+                                                                } ?>" required>
                                                         </div>
                                                     </div>
                                                     <div class="row">

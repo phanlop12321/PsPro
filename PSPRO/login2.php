@@ -40,7 +40,7 @@ function pass_encrypt($pass, $show = false)
   }
   return md5($reverse);
 }
-$pass = "499362";
+$pass = "498561";
 echo '<br> md5() ธรรมดา &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ', md5($pass);
 //เข้ารหัส md5 ก่อน
 $encrypt = pass_encrypt($pass, true);
@@ -50,8 +50,8 @@ echo '<hr/>รหัสผ่าน : ' . $pass;
 echo '<br/> ผลลัพธ์ : <b>' . $hash . '</b>';
 echo '<br/>ความยาวของตัวอักษร : <b>', strlen($hash), '</b>';
 //ข้อมูลทดสอบ
-$pass_in_db = '$2y$10$E4dfRcnTvaqqLe0n9ath9OActuIz2.hxyJwhm8CqNJQuE6XLUsmpC'; // is $hash
-$post_data = "499362";
+$pass_in_db = '$2y$10$xK.A9XZhToOXTbDA0XIwAueQbMsjuMe55vSEs7NWP4sqhmgwGYrgm'; // is $hash
+$post_data = "511519";
 echo '<hr/><br/>from <b>POST</b> = ' . $post_data;
 echo '<br/>data in <b>DB</b> = ' . $pass_in_db;
 echo '<br/><b>Md5</b> = ', md5($post_data);

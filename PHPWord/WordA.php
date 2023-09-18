@@ -80,6 +80,7 @@ echo  $num2  . "&nbsp;=&nbsp;" .Convert($num2),"<br>";
 
 $all_price = 0;
 $All_price_abd_vat = 0;
+$All_price_abd_vat1 = 0;
 $Under = '';
 $Nopaperdate = '';
 
@@ -195,8 +196,9 @@ while ($row5 = $result1234->fetch_assoc()) {
   while ($row = $result->fetch_assoc()) {
     $data = $row["id"];
     $sqldata = "SELECT * FROM data WHERE ID = $data";
-    $resultdata = $conn->query($sqldata);
-    $rowdata = $resultdata->fetch_assoc();
+    if ($resultdata = $conn->query($sqldata)) {
+      $rowdata = $resultdata->fetch_assoc();
+    }
 
     if (isset($rowdata["NAME"])) {
       $dataname = $rowdata["NAME"];
@@ -224,6 +226,7 @@ while ($row5 = $result1234->fetch_assoc()) {
 }
 
 $All_price_abd_vat = $all_price * 0.07;
+$All_price_abd_vat1 = $All_price_abd_vat + $all_price;
 
 $section->addText(htmlspecialchars("\t3. ราคากลางของงานที่จะจ้าง"), $fontStyleName2, $cellHCentered2);
 $text = thai_date_fullmonth(strtotime($row3["Center_Price_Date"]));
@@ -231,22 +234,23 @@ $section->addText(htmlspecialchars("\t   ตามบันทึกกำหน
 $section->addText(htmlspecialchars("\t4. วงเงินที่จะจ้าง"), $fontStyleName2, $cellHCentered2);
 $text2 = number_format($all_price, 2);
 $text3 = number_format($All_price_abd_vat, 2);
-$text4 = Convert($All_price_abd_vat);
-$section->addText(htmlspecialchars("\t   เงินงบประมาณเบิกจาก " . $row3["Type_Budget"] . " จากค่าเเรงในงานก่อสร้างขยายเขตระบบจำหน่ายไฟฟ้า บริเวณ " . $row3["Address"] . " งบประมาณ " . $text2 . "บาท ภาษีมูลค่าเพิ่ม " . $text3 . " บาท วงเงินรวมภาษีมูลค่าเพิ่ม  ( " . $text4 . "บาท  )"), $fontStyleName1, $cellHCentered2);
+$text5 = number_format($All_price_abd_vat1, 2);
+$text4 = Convert($All_price_abd_vat + $all_price);
+$section->addText(htmlspecialchars("\t   เงินงบประมาณเบิกจาก " . $row3["Type_Budget"] . " จากค่าเเรงในงานก่อสร้างขยายเขตระบบจำหน่ายไฟฟ้า บริเวณ " . $row3["Address"] . " งบประมาณ " . $text2 . "บาท ภาษีมูลค่าเพิ่ม " . $text3 . " บาท วงเงินรวมภาษีมูลค่าเพิ่ม " . $text5 . "  ( " . $text4 . "บาท  )"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t5. กำหนดเวลาที่ต้องการใช้พัสดุ"), $fontStyleName2, $cellHCentered2);
-$section->addText(htmlspecialchars("\t   กำหนดส่งมอบงานแล้วเสร็จ....นับจากวันลงนามในสัญญา"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t   กำหนดส่งมอบงานแล้วเสร็จ " . $row3["delivery"] . " วัน นับจากวันลงนามในสัญญา"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t6. วิธีที่จะจ้างและเหตุผลที่จะต้องจ้างวิธีนั้น"), $fontStyleName2, $cellHCentered2);
 $section->addText(htmlspecialchars("\t   6.1 พิจารณาเห็นสมควรดำเนินการจัดจ้างโดยวิธีเฉพาะเจาะจง ตามพระราชบัญญัติการจัดซื้อจัดจ้างและ การบริหารพัสดุภาครัฐ พ.ศ.2560 ตามมาตรา 56(2) (ข) เนื่องจากการจัดจ้างครั้งนี้มีราคาไม่เกิน 500,000.- บาท และดำเนินการตามระเบียบกระทรวงการคลังว่าด้วยการจัดซื้อจัดจ้าง และการบริหารพัสดุภาครัฐ พ.ศ.2560 ข้อ 79"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t   6.2 พิจารณาเห็นสมควรดำเนินการจัดจ้าง ตามกฏกระทรวง กำหนดพัสดุและวิธีการจัดซื้อจัดจ้างพัสดุที่รัฐ ต้องการส่งเสริมหรือสนับสนุน ( ฉบับที่ 2 ) พ.ศ. 2563 ข้อ 7 (2) (ก) และ หมวด 7/1 พัสดุส่งเสริมการผลิตภายในประเทศ ข้อ 27/3 (3) การจัดจ้างที่มิใช่คนก่อสร้าง"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t7. หลักเกณฑ์การพิจารณาคัดเลือกขอเสนอ"), $fontStyleName2, $cellHCentered2);
 $section->addText(htmlspecialchars("\t   ( ) พิจารณาจากราคารวม ( ) พิจารณาจากราคาต่อรายการ ( / ) พิจารณาจากราคาต่อหน่วย"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t8. ข้อเสนออื่นๆ"), $fontStyleName2, $cellHCentered2);
-$section->addText(htmlspecialchars("\t   8.1 เห็นควรให้เจ้าหน้าที่พัสดุ โดย " . $row1["Fname"] . " " . $row1["Lname"] . "ตำแหน่ง " . $row1["Rank"] . "ผ" . $row1["Under"] . "." . $row1["pea"] . "เป็นผู้ติดต่อตกลงกับผู้รับจ้างโดยตรง"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t   8.1 เห็นควรให้เจ้าหน้าที่พัสดุ โดย " . $row1["Fname"] . " " . $row1["Lname"] . " ตำแหน่ง " . $row1["Rank"] . " ผ" . $row1["Under"] . "." . $row1["pea"] . "  เป็นผู้ติดต่อตกลงกับผู้รับจ้างโดยตรง"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t   8.2 แต่งตั้งคณะกรรมการกำหนดราคากลางในการจ้างเหมาก่อสร้างระบบไฟฟ้า"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t       8.2.1 " . $row3["FName_Chairman_Center_Price"] . " " . $row3["Lname_Chairman_Center_Price"] . " ตำแหน่ง " . $row3["Rank_C_C"] . " ประธานกรรมการ"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t       8.2.2 " . $row3["FName_Director_1"] . " " . $row3["LName_Director_1"] . " ตำแหน่ง " . $row3["Rank_D_C1"] . " กรรมการ"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t       8.2.3 " . $row3["FName_Director_2"] . " " . $row3["LName_Director_2"] . " ตำแหน่ง " . $row3["Rank_D_C2"] . " กรรมการ"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t   8.3 แต่งตั้งคณะกรรมกาตรวจรับพัสดุ/ผู้ตรวจรับพัสด"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t   8.3 แต่งตั้งคณะกรรมกาตรวจรับพัสดุ/ผู้ตรวจรับพัสดุ"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t       8.3.1 " . $row3["FName_Chairman_Check"] . " " . $row3["LName_Chairman_Check"] . " ตำแหน่ง " . $row3["Rank_C_Check"] . " ประธานกรรมการ"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t       8.3.2 " . $row3["FName_Director_Check1"] . " " . $row3["LName_Director_Check1"] . " ตำแหน่ง " . $row3["Rank_D_Check1"] . " กรรมการ"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t       8.3.3 " . $row3["FName_Director_Check2"] . " " . $row3["LName_Director_Check2"] . " ตำแหน่ง " . $row3["Rank_D_Check2"] . " กรรมการ"), $fontStyleName1, $cellHCentered2);

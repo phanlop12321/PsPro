@@ -105,18 +105,13 @@ $ID_employee = $row3["Employee"];
 $ID_vdlist = $row3["Vender_List"];
 
 
-
-$sql4 = "SELECT * FROM wbs WHERE id = $id AND ( User = '$User' )";
-$result4 = $conn->query($sql4);
-
-while ($row4 = $result4->fetch_assoc()) {
-  $WBS[$count] = $row4["WBS"];
-  $count++;
-}
-
 $sql1 = "SELECT * FROM employee WHERE ID=$ID_employee";
 $result1 = $conn->query($sql1);
 $row1 = $result1->fetch_assoc();
+
+$sql4 = "SELECT * FROM new285data WHERE  userid = $id AND ( user = '$User' )";
+$result4 = $conn->query($sql4);
+$row4 = $result4->fetch_assoc();
 
 require_once 'bootstrap.php';
 
@@ -186,7 +181,7 @@ for ($B = 0; $B < $count; $B++) {
   }
 }
 $text5 = substr($row3["Center_Price_Date"], 0, 4) + 543;
-$section->addText(htmlspecialchars("\t   2.1  ตามรายงานขอจ้างเลขที่ " . $text3 . " ได้ขออนุมัติให้ คณะกรรมการกำหนดราคา งานจ้างเหมาเฉพาะค่าเเรงงาน บริเวณ " . $row3["Address"] . " ในหมายเลข WBS " . $text4 . " ตามอนุมัติประมาณการเลขที่ " . $row3["Estimate"] . " ลว. " . $text5 . "ค่าแรง " . $row3["event"] . " นั้น"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t   2.1  ตามรายงานขอจ้างเลขที่ " . $text3 . " ได้ขออนุมัติให้ คณะกรรมการกำหนดราคา งานจ้างเหมาเฉพาะค่าเเรงงาน บริเวณ " . $row3["Address"] . " ในหมายเลข WBS " . $row4["wbs"] . " ตามอนุมัติประมาณการเลขที่ " . $row3["Estimate"] . " ลว. " . $text5), $fontStyleName1, $cellHCentered2);
 
 $section->addText(htmlspecialchars("\t3. ข้อพิจารณา"), $fontStyleName2, $cellHCentered2);
 $section->addText(htmlspecialchars("\t   3.1  จากรายละเอียด เรื่องเดิม ข้อเท็จจริง เพื่อให้เป็นไปตามหลักเกณฑ์ของ กฟภ. ในการคำนวณราคากลางจ้างเหมาก่อสร้างระบบไฟฟ้า และให้การจ้างเหมาเอกชนช่วยงานก่อสร้างระบบไฟฟ้าของ " . $row1["pea"] . " ในสังกัด กฟ" . $row1["county"] . " มีราคากลางในการจ้างเหมาฯ ที่เหมาะสมเป็นปัจจุบัน ดังนั้นเพื่อให้เกิดความคล่องตัวในการดำเนินการ คณะกรรมการฯตรวจสอบและ พิจารณางานแล้ว จึงขออนุมัติกำหนดราคากลางงานข้างต้น ตามแบบฟอร์ม การคำนาณราคากลาง งานจ้างเหมาระบบไฟฟ้า (เฉพาะค่าแรง)"), $fontStyleName1, $cellHCentered2);

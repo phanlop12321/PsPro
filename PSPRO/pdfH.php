@@ -119,18 +119,14 @@ if (!$_SESSION["UserID"]) { //check session
   $row4 = $result4->fetch_assoc();
   $endprice = 0;
   $delendprice = 0;
-  $sql5 = "SELECT * FROM wbs WHERE id = $id AND ( User = '$User' )";
-  $result5 = $conn->query($sql5);
 
-  while ($row5 = $result5->fetch_assoc()) {
-    $sql6 = "SELECT * FROM end_data WHERE network = {$row5['NETWORK']}";
-    $result6 = $conn->query($sql6);
-    while ($row6 = $result6->fetch_assoc()) {
-      $endprice = $endprice + ($row6["newprice"] * $row6["quantity"]);
-      echo "--";
-      echo $row6["newprice"];
-    }
+  $sql6 = "SELECT * FROM new285data WHERE userid = $id AND ( user = '$User' )";
+  $result6 = $conn->query($sql6);
+
+  while ($row6 = $result6->fetch_assoc()) {
+    $endprice = ($row6["newprice"] * $row6["qty"]) + $endprice;
   }
+
 
   $delendprice = $endprice * 0.002;
   echo $delendprice;
@@ -222,8 +218,7 @@ if (!$_SESSION["UserID"]) { //check session
       <?php echo thai_date_fullmonth(strtotime($row4["ContractDate"])); ?> ระหว่าง การไฟฟ้าส่วนภูมิภาค โดย
       <?php echo $row4['ContractFname']; ?>&nbsp;&nbsp;
       <?php echo $row4['ContractLname']; ?>&nbsp;ตำแหน่ง&nbsp;
-      <?php echo $row4['ContractUnder']; ?>ผจก.
-      <?php echo $row1['pea']; ?> สำนักงานตั้งอยู่
+      <?php echo $row4['ContractUnder']; ?> สำนักงานตั้งอยู่
       <?php echo $row4['AddressPea']; ?> ซึ่งต่อไปนี้ในสัญญาเรียก "ผู้ว่าจ้าง"
       ฝ่ายหนึ่ง กับ
       <?php echo $row2['fname']; ?>
@@ -259,8 +254,8 @@ if (!$_SESSION["UserID"]) { //check session
         หลักประกันการปฏิบัติตามสัญญา</span>
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ในขณะทำสัญญานี้ผู้รับจ้างได้นำหลักประกันเป็น
       เงินสด เป็นจำนวน
-      <?php echo $row4['ContractMoney']; ?>&nbsp;บาท&nbsp;(&nbsp;
-      <?= Convert($row4['ContractMoney']); ?>&nbsp;) ไม่น้อยกว่าร้อยละ 5 (ห้า) ของราคาจ้างตามสัญญา
+      <?php echo $endprice * 0.05; ?>&nbsp;บาท&nbsp;(&nbsp;
+      <?= Convert($endprice * 0.05); ?>&nbsp;) ไม่น้อยกว่าร้อยละ 5 (ห้า) ของราคาจ้างตามสัญญา
       มามอบให้แก่ผู้ว่าจ้างเพื่อเป็นหลักประกันการปฏิบัติตามสัญญานี้
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;กรณีผู้รับจ้างใช้หนังสือค้ำประกันมาเป็นหลักประกันการปฏิบัติบัติตามสัญญา&nbsp;หนังสือค้ำประกันดังกล่าว
       จะต้องออกโดยธนาคารที่ประกอบกิจการในประเทศไทย&nbsp;หรือโดยบริษัทเงินทุนหรือบริษัทเงินทุนหลักทรัพย์ที่ได้รับอนุญาต
@@ -371,7 +366,7 @@ if (!$_SESSION["UserID"]) { //check session
       ปวงของผู้รับจ้าง&nbsp;รวมทั้งผู้รับจ้างช่วง&nbsp;(ถ้ามี)&nbsp;ในกรณีความเสียหายที่คิดค่าสินไหมทดแทนได้ตามกฎหมาย&nbsp;ซึ่งเกิดจากอุบัติเหตุหรือภยันตรายใดๆ&nbsp;ต่อลูกจ้างหรือบุคคลอื่นที่ผู้รับจ้างหรือผู้รับจ้างช่วงจ้างมาทำงาน&nbsp;ผู้รับจ้างจะต้องส่งมอบกรมธรรม์ประกันภัยดังกล่าวพร้อมทั้งหลักฐานการชำระเบี้ยประกันให้แก่ผู้ว่าจ้างเมื่อผู้ว่าจ้างเรียกร้อง
       <br><br><span
         style="font-size: 16pt; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ข้อ 13.
-        การตรวจรับงานจ้า</span>
+        การตรวจรับงานจ้าง</span>
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เมื่อผู้ว่าจ้างได้ตรวจรับงานจ้างที่ส่งมอบและเห็นว่าถูกต้องครบถ้วนตามสัญญาแล้ว&nbsp;ผู้ว่าจ้างจะออกหลักฐานการรับมอบเป็นหนังสือไว้ให้&nbsp;เพื่อผู้รับจ้างนำมาเป็นหลักฐานประกอบการขอรับเงินค่างานจ้างนั้น
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถ้าผลของการตรวจรับงานจ้างปรากฎว่างานจ้างที่ผู้รับจ้างส่งมอบไม่ตรงตามสัญญา&nbsp;ผู้ว่าจ้างทรงไว้ซึ่งสิทธิที่จะไม่รับงานจ้างนั้น&nbsp;ในกรณีเช่นว่านี้&nbsp;ผู้รับจ้างต้องทำการแก้ไขให้ถูกต้องตามสัญญาด้วยค่าใช้จ่ายของผู้รับจ้างเอง&nbsp;และระยะ
       เวลาที่เสียไปเพราะเหตุดังกล่าวผู้รับจ้างจะนำมาอ้างเป็นเหตุขอขยายเวลาส่งมอบงานจ้างตามสัญญาหรือของดหรือลดค่า
@@ -402,11 +397,11 @@ if (!$_SESSION["UserID"]) { //check session
       <br><br><span
         style="font-size: 16pt; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ข้อ 17.
         วัสดุอุปกรณ์ที่ผู้ว่าจ้างจัดหา</span>
-      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ผู้ว่าจ้างจะเป็นผู้ดำเนินการจัดหาววัสดุอุปกรณ์ตามที่กำหนดในขอบเขตซองงานซึ่งเป็นเอกสารแนบท้าย
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ผู้ว่าจ้างจะเป็นผู้ดำเนินการจัดหาวัสดุอุปกรณ์ตามที่กำหนดในขอบเขตซองงานซึ่งเป็นเอกสารแนบท้าย
       สัญญา&nbsp;และเป็นส่วนหนึ่งของสัญญาให้แก่ผู้รับจ้าง&nbsp;โดยให้ผู้รับจ้างขอรับมอบวัสดุอุปกรณ์ได้จากคลังพัสดุของการไฟฟ้าส่วน<br>ภูมิภาคในพื้นที่งานนั้นๆ&nbsp;หรือตามสถานที่ที่ผู้ว่าจ้างกำหนดโดยผู้รับจ้างจะต้องแจ้งรายชื่อผู้แทนหรือผู้ที่ได้รับมอบหมายใน<br>การรับมอบวัสดุอุปกรณ์ด้วยพร้อมทั้งจัดทำหนังสือมอบอำนาจ&nbsp;(ถ้ามี)
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ผู้รับจ้างจะต้องจัดทำแผนการดำเนินการช่วงระยะเวลาและปริมาณวัสดุอุปกรณ์ที่จะขอเบิกให้ผู้ควบคุมงานของผู้ว่าจ้างตรวจสอบก่อนใช้วัสดุนั้นๆ&nbsp;ไม่น้อยกว่า&nbsp;15&nbsp;(สิบห้า)&nbsp;วัน&nbsp;พร้อมทั้งจัดหาพาหนะไปรับวัสดุอุปกรณ์และถือว่า
       การรับมอบนั้นผู้รับจ้างได้รับมอบถูกต้องแล้ว
-      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ผู้รับจ้างต้องจัดเก็บวัสดุอุปกรณ์ที่เบิกไปไว้ในสถานที่ที่ปลอตภัย&nbsp;และมีเจ้าหน้าที่ดูแลทั้งนี้ผู้ว่าจ้างสงวนสิทธิ์ที่จะพิจารณาให้เบิกวัสดุอุปกรณ์สำหรับใช้งานได้ไม่เกิน&nbsp;30&nbsp;(สามสิบ)&nbsp;วัน&nbsp;ในกรณีที่มีวัสดุอุปกรณ์ที่เบิกไปเหลือจากการใช้
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ผู้รับจ้างต้องจัดเก็บวัสดุอุปกรณ์ที่เบิกไปไว้ในสถานที่ที่ปลอดภัย&nbsp;และมีเจ้าหน้าที่ดูแลทั้งนี้ผู้ว่าจ้างสงวนสิทธิ์ที่จะพิจารณาให้เบิกวัสดุอุปกรณ์สำหรับใช้งานได้ไม่เกิน&nbsp;30&nbsp;(สามสิบ)&nbsp;วัน&nbsp;ในกรณีที่มีวัสดุอุปกรณ์ที่เบิกไปเหลือจากการใช้
       งานผู้รับจ้างจะต้องนำส่งคืนคลังพัสดุของผู้ว่าจ้างก่อนการส่งมอบงานงวดสุดท้ายในสภาพที่สมบูรณ์
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;หากวัสดุอุปกรณ์ที่ผู้รับจ้างเบิกไปชำรุดสูญหาย&nbsp;ผู้รับจ้างจะต้องชดใช้ค่าวัสดุให้ผู้ว่าจ้างจนครบถ้วน&nbsp;หากผู้รับจ้างไม่ชดใช้ให้ถูกต้องครบถ้วนภายในกำหนด&nbsp;วัน&nbsp;นับถัดจากวันที่ได้รับแจ้งเป็นหนังสือจากผู้ว่าจ้าง&nbsp;ให้ผู้ว่าจ้างมีสิทธิที่จะหัก
       เอาจากจำนวนเงินค่าจ้างที่ต้องชำระ&nbsp;หรือจากเงินประกันผลงานของผู้รับจ้าง&nbsp;หรือบังคับจากหลักประกันการปฏิบัติตาม
@@ -456,7 +451,7 @@ if (!$_SESSION["UserID"]) { //check session
       แห่งสัญญานี้ได้&nbsp;ผู้รับจ้างจะต้องแจ้งเหตุหรือพฤติการณ์ดังกล่าวพร้อมหลักฐานเป็นหนังสือให้ผู้ว่าจ้างทราบ&nbsp;เพื่อของดหรือลดค่าปรับหรือขยายเวลาทำงานออกไปภายใน&nbsp;15&nbsp;(สิบห้า)&nbsp;วันนับถัดจากวันที่เหตุนั้นสิ้นสุดลง&nbsp;หรือตามที่กำหนดใน
       กฎกระทรวงดังกล่าวแล้วแต่กรณี
       <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ถ้าผู้รับจ้างไม่ปฏิบัติให้เป็นไปตามความในวรรคหนึ่ง&nbsp;ให้ถือว่าผู้รับจ้างได้สละสิทธิเรียกร้อง&nbsp;ในการที่จะของดหรือลดค่าปรับ&nbsp;หรือขยายเวลาทำงานออกไปโดยไม่มีเงื่อนไขใดๆ&nbsp;ทั้งสิ้น&nbsp;เวันแต่&nbsp;กรณีเหตุเกิดจากความผิดหรือความบกพร่องของฝ่ายผู้ว่าจ้าง&nbsp;ซึ่งมีหลักฐานชัดแจ้ง&nbsp;หรือผู้ว่าจ้างทราบดี&nbsp;อยู่แล้วตั้งแต่ต้น
-      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;การงดหรือลดค่าปรับ&nbsp;หรือชยายกำหนดเวลาทำงานตามวรรคหนึ่ง&nbsp;อยู่ในดุลพินิจของผู้ว่าจ้างที่จะพิจารณา
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;การงดหรือลดค่าปรับ&nbsp;หรือขยายกำหนดเวลาทำงานตามวรรคหนึ่ง&nbsp;อยู่ในดุลพินิจของผู้ว่าจ้างที่จะพิจารณา
       ตามที่เห็นสมควร
       <br><br><span
         style="font-size: 16pt; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ข้อ 23.

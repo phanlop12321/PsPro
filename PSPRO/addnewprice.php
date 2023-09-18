@@ -16,35 +16,17 @@ if (!$_SESSION["UserID"]) { //check session
   $newprice = $_POST['newprice'];
   $id = $_POST['id'];
   $network = $_POST['network'];
+  $qty = $_POST['qty'];
 
 
 
   for ($i = 1; $i < $count; $i++) {
-    $sql = "UPDATE new285data SET newprice = $newprice[$i] WHERE (network = '$network[$i]' ) AND ( id = $id[$i] )";
+    echo (" newprice[" . $i . "] = " . $newprice[$i]);
+    $sql = "UPDATE new285data SET newprice = $newprice[$i] WHERE (network = '$network[$i]' ) AND ( id = $id[$i] )AND ( qty = $qty[$i] )";
 
     if (mysqli_query($conn, $sql)) {
-      echo "New record created successfully";
-    } else {
-      echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
-
   }
-
-  //print_r($newprice);
-  //print_r($id);
-  //print_r($network);
-
-
-
-
-  //echo $count;
-
-
-
-
-
-
-
 
   mysqli_close($conn);
 

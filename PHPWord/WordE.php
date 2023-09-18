@@ -153,7 +153,7 @@ $phpWord->addParagraphStyle(
   )
 );
 
-$section = $phpWord->addSection(['marginTop' => 500, 'marginLeft' => 500, 'marginRight' => 500, 'marginBottom' => 500]);
+$section = $phpWord->addSection(['marginTop' => 500, 'marginLeft' => 1500, 'marginRight' => 1500, 'marginBottom' => 500]);
 $section->addImage('img/pea.jpg', ['width' => 100, 'height' => 100]);
 $table = $section->addTable();
 $table->addRow();
@@ -192,7 +192,7 @@ $pricetext = Convert($price);
 $ContractMoney = number_format($price * 0.05);
 
 $section->addText(htmlspecialchars("\tตามรายงานขอจ้างเหมาเอกชนช่วยงานก่อสร้างฯ ตามอนุมัติที่ " . $row1["county"] . " " . $row1["pea"] . " (   )               ลว.             "), $fontStyleName1, 'multipleTab');
-$section->addText(htmlspecialchars("ตามที่ แผนกก่อสร้างได้จ้างเหมา " . $row2["fname"] . " " . $row2["lname"] . " Vender List " . $ID_vdlist . " เลขประจำตัวผู้เสียภาษี " . $row2["idtax"] . " ช่วยงานก่อสร้างขยายเขตระบบจำหน่ายไฟฟ้า บริเวณ " . $row3["Address"] . " เป็นจำนวนเงิน " . $price1 . " บาท ( " . $pricetext . " ) รับประกันงาน " . $row3["avouch"] . " วัน นับตั้งแต่วันที่ ส่งมอบงานจ้างถูกต้องเรียบร้อยแล้ว เพื่อเป็นหลักประกันการปฏิบัติงานตามเงื่อนไข ของใบสั่งจ้าง ผ" . $row1["Under"] . "." . $row1["pea"] . " จึงขอแจ้งให้ " . $row2["fname"] . " " . $row2["lname"] . "  วางเงินประกันสัญญาจ้างในอัตราร้อยละ 5 ของวงเงินการจ้างเหมาทั้งสิ้น คิดเป็นเงินประกัน " . $ContractMoney . " บาท "), $fontStyleName1, 'multipleTab');
+$section->addText(htmlspecialchars("ตามที่ แผนกก่อสร้างได้จ้างเหมา " . $row2["fname"] . " " . $row2["lname"] . " Vender List " . $ID_vdlist . " เลขประจำตัวผู้เสียภาษี " . $row2["idtax"] . " ช่วยงานก่อสร้างขยายเขตระบบจำหน่ายไฟฟ้า บริเวณ " . $row3["Address"] . " เป็นจำนวนเงิน " . $price1 . " บาท ( " . $pricetext . " ) รับประกันงาน " . $row3["avouch"] . " วัน นับตั้งแต่วันที่ ส่งมอบงานจ้างถูกต้องเรียบร้อยแล้ว เพื่อเป็นหลักประกันการปฏิบัติงานตามเงื่อนไข ของใบสั่งจ้าง ผ" . $row1["Under"] . "." . $row1["pea"] . " จึงขอแจ้งให้ " . $row2["fname"] . " " . $row2["lname"] . "  วางเงินประกันสัญญาจ้างในอัตราอย่างน้อยร้อยละ 5 ของวงเงินการจ้างเหมาทั้งสิ้น คิดเป็นเงินประกัน " . $ContractMoney . " บาท "), $fontStyleName1, 'multipleTab');
 $section->addText(htmlspecialchars("\t\tจึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ"), $fontStyleName1, 'multipleTab');
 $section->addTextBreak(2);
 $section->addText(htmlspecialchars("\t\t\t                  " . $row1["Fname"] . " " . $row1["Lname"]), $fontStyleName1, 'multipleTab');
@@ -201,6 +201,6 @@ $section->addText(htmlspecialchars("\t\t\t                ( " . $row1["Rank"] . 
 
 // Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า.docx');
+$objWriter->save('ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า_.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า_.docx';</script>";

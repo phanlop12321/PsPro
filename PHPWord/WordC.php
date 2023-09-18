@@ -67,46 +67,22 @@ function ReadNumber($number)
   return $ret;
 }
 include('connection.php');
-
-/*$num1 = '3500'; 
-$num2 = '120000.50'; 
-echo  Convert($num1),"<br>"; 
-echo  $num2  . "&nbsp;=&nbsp;" .Convert($num2),"<br>"; 
-*/
-
-
-
 $price = 0;
 $vat = 0;
+$vat11 = 0;
 $price_abd_vat = 0;
-$all_price = 0;
+$all_price_Only = 0;
 $all_vat = 0;
 $All_price_abd_vat = 0;
-$WBS;
-$count = 0;
+
 $Under = '';
 $Nopaperdate = '';
 
 $priceAll = 0;
-
-$All_price_no_vat = 0;
-
-$pricev = 0;
-
-$percent = 0;
-$percent_v = 0;
-
-
-
-
 $User = $_SESSION["User"];
-//$User = 500306;
-//echo $User;
-//$id = $_SESSION["ID"];
 $id = $_GET["create"];
-//$id = 1;
 
-$sql3 = "SELECT * FROM data285 WHERE  id = $id AND ( user = '$User' )";
+$sql3 = "SELECT Employee, Vender_List, Nopaperdate, Nopaper, year, Address FROM data285 WHERE  id = $id AND ( user = '$User' )";
 $result3 = $conn->query($sql3);
 $row3 = $result3->fetch_assoc();
 
@@ -198,7 +174,7 @@ $section->addText(htmlspecialchars("\t   1.1 " . $row2["fname"] . " " . $row2["l
 $text1 = number_format($monney, 2);
 $text2 = thai_date_fullmonth(strtotime($row2["smedate"]));
 $section->addText(htmlspecialchars("\t  จำนวนเงิน " . $text1 . " บาท (ราคารวมภาษีมูลค่าเพิ่ม)"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t2. ผู้เสนอราคา  " . $row2["fname"] . " " . $row2["lname"] . " เนื่องจาก มีผู้เสนอราคาเพียงรายเดียว และได้ลงทะเบียนเป็นผู้ประกอบการวิสหกิจขนาดกลางและขนาดย่อม (SME) ตามหนังสือรับรองการขึ้นทะเบียนสมาชิก SME เลขที่ " . $row2["sme"] . " ลว. " . $text2 . " ซึ่งมีคุณสมบัติถูกต้องตามหลักเกณ์ที่ กฟภ.ระบุ ดังนี้"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t2. ผู้เสนอราคา  " . $row2["fname"] . " " . $row2["lname"] . " เนื่องจาก มีผู้เสนอราคาเพียงรายเดียว และได้ลงทะเบียนเป็นผู้ประกอบการวิสหกิจขนาดกลางและขนาดย่อม (SME) ตามหนังสือรับรองการขึ้นทะเบียนสมาชิก SME เลขที่ " . $row2["sme"] . " ลว. " . $text2 . " ซึ่งมีคุณสมบัติถูกต้องตามหลักเกณฑ์ที่ กฟภ.ระบุ ดังนี้"), $fontStyleName1, $cellHCentered2);
 
 
 $sql1234 = "SELECT * FROM new285data WHERE    user = $User  AND ( userid = $id  ) GROUP BY network";
@@ -220,7 +196,7 @@ while ($row5 = $result1234->fetch_assoc()) {
   $phpWord->addTableStyle('Colspan Rowspan', $styleTable);
   $table = $section->addTable('Colspan Rowspan');
   $table->addRow();
-  $cell1 = $table->addCell(500, $cellRowSpan);
+  $cell1 = $table->addCell(1000, $cellRowSpan);
   $textrun1 = $cell1->addTextRun($cellHCentered);
   $textrun1->addText(htmlspecialchars('ที่'), $fontStyle, $cellHCentered2);
 
@@ -244,7 +220,6 @@ while ($row5 = $result1234->fetch_assoc()) {
   $textrun5 = $cell5->addTextRun($cellHCentered);
   $textrun5->addText(htmlspecialchars('ราคารวมตกลง (บาท)'), $fontStyle, $cellHCentered2);
 
-
   $table->addRow();
   $table->addCell(null, $cellRowContinue);
   $table->addCell(null, $cellRowContinue);
@@ -265,8 +240,9 @@ while ($row5 = $result1234->fetch_assoc()) {
   while ($row = $result->fetch_assoc()) {
     $data = $row["id"];
     $sqldata = "SELECT * FROM data WHERE ID = $data";
-    $resultdata = $conn->query($sqldata);
-    $rowdata = $resultdata->fetch_assoc();
+    if ($resultdata = $conn->query($sqldata)) {
+      $rowdata = $resultdata->fetch_assoc();
+    }
     if (isset($rowdata["NAME"])) {
       $dataname = $rowdata["NAME"];
       $dataunit = $rowdata["UNIT"];
@@ -287,7 +263,7 @@ while ($row5 = $result1234->fetch_assoc()) {
       $VatSt = "";
       $PAVSt = "";
       if ($status == 1) {
-        $VatSt = " - ";
+        $VatSt = 0;
         $PAVSt = number_format(($row["newprice"] * $row['qty']) + $row["newprice"] * $row['qty'], 2);
         $vat = 0;
       }
@@ -296,41 +272,29 @@ while ($row5 = $result1234->fetch_assoc()) {
         $PAVSt = number_format(($row["newprice"] * $row['qty'] * 0.07) + $row["newprice"] * $row['qty'], 2);
         $vat = $vat + ($row["newprice"] * $row["qty"] * 0.07);
       }
-      $pricev = $pricev + (($row["newprice"] * $row["qty"]) + $vat);
-      $All_price_no_vat = $All_price_no_vat + $row["newprice"];
       $table->addCell()->addText(htmlspecialchars(number_format($row["newprice"], 2)), null, $fontStyleAlign);
       $table->addCell()->addText(htmlspecialchars(number_format($row["newprice"] * $row['qty'], 2)), null, $fontStyleAlign);
-
       $table->addCell()->addText(htmlspecialchars($VatSt), null, $fontStyleAlign);
-      $table->addCell()->addText(htmlspecialchars(number_format($row["newprice"] * $row['qty'], 2)), null, $fontStyleAlign);
-
+      $table->addCell()->addText(htmlspecialchars(number_format($row["newprice"] * $row['qty'] + $VatSt, 2)), null, $fontStyleAlign);
 
       $i = $i + 1;
-      $price = $price + ($row["newprice"] * $row["qty"]);
-      $vat = $vat + ($row["newprice"] * $row["qty"] * 0.07);
-      $price_abd_vat = $price_abd_vat + ($row["newprice"] * $row["qty"]) + $vat;
-
-      $priceAll = $priceAll + ($row["price"] * $row["qty"]);
-      $all_vat = $all_vat + $vat;
-      $APAVSt = $APAVSt + $vat;
+      $price = round($price + ($row["newprice"] * $row["qty"]), 2);
+      $vat11 = round($vat11 + $vat, 2);
+      $price_abd_vat = round($price_abd_vat + ($row["newprice"] * $row["qty"]) + $vat, 2);
+      $priceAll = round($priceAll + ($row["price"] * $row["qty"]), 2);
+      $all_vat = round($all_vat + $vat, 2);
+      $APAVSt = round($APAVSt + $vat, 2);
       $vat = 0;
-
     }
   }
-
-  $all_price = $all_price + $price;
-  $All_price_abd_vat = $All_price_abd_vat + $price_abd_vat;
-
+  $all_price_Only = round($all_price_Only + $price, 2);
+  $All_price_abd_vat = round($All_price_abd_vat + $price_abd_vat, 2);
   $APriceNVSt = number_format($price, 2);
   $APAVSt1 = number_format($APAVSt, 2);
   $APriceSt = number_format($price_abd_vat, 2);
-
   $price = 0;
   $vat = 0;
   $price_abd_vat = 0;
-
-  $percent = number_format($pricev / $All_price_no_vat * 100, 2);
-  $percent_v = number_format(($All_price_no_vat - $pricev) / $All_price_no_vat * 100, 2);
 
   if ($status == 1) {
     $APAVSt1 = " - ";
@@ -353,16 +317,13 @@ while ($row5 = $result1234->fetch_assoc()) {
   $price = 0;
   $vat = 0;
   $price_abd_vat = 0;
-  $APAVSt = "";
   $price = 0;
-  $pricev = 0;
 
 }
 
-$ALLPriceNVSt = number_format($all_price, 2);
+$ALLPriceNVSt = number_format($all_price_Only, 2);
 $ALLPAVSt = number_format($all_vat, 2);
 $ALLPriceSt = number_format($All_price_abd_vat, 2);
-
 $priceAll1 = $priceAll - $All_price_abd_vat;
 $priceAll1 = number_format($priceAll1, 2);
 $priceAll2 = number_format($priceAll, 2);
@@ -384,8 +345,8 @@ $section->addText(htmlspecialchars("\t\tจึงเรียนมาเพื�
 
 $section->addTextBreak(1);
 $section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________________ เจ้าหน้าที่"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\t           (                                            )"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\tตำแหน่ง __________________________ "), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\t                     ( " . $row1["Fname"] . " " . $row1["Lname"] . " )"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\tตำแหน่ง            " . $row1["Rank"] . " ผ" . $row1["Under"] . "." . $row1["pea"]), $fontStyleName1, $cellHCentered2);
 
 
 $styleTable = array('borderSize' => 6, 'cellMargin' => 80);
@@ -404,6 +365,6 @@ $table1->addCell(4000, $styleCell)->addText(htmlspecialchars("\tเห็นช�
 
 // Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('รายงานผลการพิจารณาและขออนุมัติสั่งจ้าง.docx');
+$objWriter->save('รายงานผลการพิจารณาและขออนุมัติสั่งจ้าง1.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'รายงานผลการพิจารณาและขออนุมัติสั่งจ้าง.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'รายงานผลการพิจารณาและขออนุมัติสั่งจ้าง1.docx';</script>";

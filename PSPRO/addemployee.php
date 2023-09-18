@@ -72,5 +72,5 @@ if (!$_SESSION["UserID"]) { //check session
     mysqli_close($conn);
 }
 
-header('Location: https://utdpea.com/PSPRO/PSPRO/form-employees.php');
+header('Location: form-employees.php');
 ?>

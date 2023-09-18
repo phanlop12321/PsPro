@@ -29,5 +29,5 @@ if ($conn->query($sql) === TRUE) {
     echo "Error updating record: " . $conn->error;
 }
 
-header('Location: form-wbs.php#' . $countid);
+header('Location: form-wbs2.php#' . $countid);
 ?>

@@ -123,7 +123,7 @@ $sql1 = "SELECT * FROM employee WHERE ID=$ID_employee";
 $result1 = $conn->query($sql1);
 $row1 = $result1->fetch_assoc();
 
-$sql6 = "SELECT * FROM new285data WHERE ( user = $User )  AND ( userid = $id  )";
+$sql6 = "SELECT * FROM new285data WHERE ( user = $User )  AND ( userid = $id  ) AND ( type = 'Remove(งานรื้อถอน)') GROUP BY network";
 $result6 = $conn->query($sql6);
 
 
@@ -150,6 +150,7 @@ $phpWord->addFontStyle(
 );
 
 $cellHCentered2 = array('spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
+$cellHCentered1 = array('align' => 'center', 'spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
 
 $section = $phpWord->addSection(['marginTop' => 100, 'marginLeft' => 500, 'marginRight' => 500, 'marginBottom' => 100]);
 $section->addImage('img/pea.jpg', ['width' => 100, 'height' => 100]);
@@ -183,27 +184,27 @@ if ($row3["Nopaper"] == '') {
   $text3 = $row3["Nopaper"] . " ลว. " . thai_date_fullmonth(strtotime($row3["Nopaperdate"]));
 }
 $monney = 0;
-$row6 = $result6->fetch_assoc();
+// $row6 = $result6->fetch_assoc();
 
 
-$section->addText(htmlspecialchars("\tตามที่อ้างถึงให้สำรวจทรัพย์สินอุปกรณ์เพื่อรื้อถอนระบบจำหน่ายงาน " . $row3["Name"] . " อนุมัติ เลขที่ ____________________________________ ซึ่งได้สำรวจแล้วเสร็จ เมื่อวันที่ ___________________ รายละเอียดมีดังนี้.- "), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\tตามที่อ้างถึงให้สำรวจทรัพย์สินอุปกรณ์เพื่อรื้อถอนระบบจำหน่ายงาน " . $row3["Name"] . " อนุมัติ เลขที่ " . $row3["Demolish"] . " ลว. " . thai_date_fullmonth(strtotime($row3["Demolish_date"])) . " ซึ่งได้สำรวจแล้วเสร็จ เมื่อวันที่ " . thai_date_fullmonth(strtotime($row3["Demolish_finish"])) . "รายละเอียดมีดังนี้.- "), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t1. ที่ตั้งทรัพย์สิน(ชื่อบ้าน,ชื่อสถานี) " . $row3["Address"]), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t2. ทรัพย์สินที่รื้ถอนได้ก่อสร้างเมื่อ ปี พ.ศ._____________"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("\t3. หมายเลขงานที่รื้อถอน.-"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t1_______________________________แผนก_______________โครงข่าย______________"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t2_______________________________แผนก_______________โครงข่าย______________"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t3_______________________________แผนก_______________โครงข่าย______________"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t4_______________________________แผนก_______________โครงข่าย______________"), $fontStyleName1, $cellHCentered2);
+while ($row6 = $result6->fetch_assoc()) {
+  $section->addText(htmlspecialchars("\t\t1 " . $row6["wbs"] . " แผนก " . $row6["job"] . " โครงข่าย " . $row6["network"]), $fontStyleName1, $cellHCentered2);
+}
+
 $section->addText(htmlspecialchars("จึงเรียนมาเพื่อโปรดทราบและพิจารณาสั่งการต่อไป"), $fontStyleName1, $cellHCentered2);
 $section->addTextBreak(1);
-$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________________ "), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\t           (                                           )\tตำแหน่ง\t______________"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________ "), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\t           ( " . $row3["FName_Demolish_Check"] . " " . $row3["LName_Demolish_Check"] . " )\t   ตำแหน่ง\t" . $row3["Rank_Demolish_Check"]), $fontStyleName1, $cellHCentered2);
 $section->addTextBreak(1);
-$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________________ "), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\t           (                                           )\tตำแหน่ง\t______________"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________ "), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\t           ( " . $row3["FName_Demolish_Check2"] . " " . $row3["LName_Demolish_Check2"] . " )\t   ตำแหน่ง\t" . $row3["Rank_Demolish_Check2"]), $fontStyleName1, $cellHCentered2);
 $section->addTextBreak(1);
-$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________________ "), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("\t\t\t           (                                           )\tตำแหน่ง\t______________"), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\tลงชื่อ     __________________ "), $fontStyleName1, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\t           ( " . $row3["FName_Demolish_Check3"] . " " . $row3["LName_Demolish_Check3"] . " )\t   ตำแหน่ง\t" . $row3["Rank_Demolish_Check3"]), $fontStyleName1, $cellHCentered2);
 
 
 $styleTable = array('cellMargin' => 18);
@@ -213,7 +214,7 @@ $section->addTextBreak(1);
 $table1 = $section->addTable('Fancy Table');
 $table1->addRow();
 $table1->addCell(5500, ['borderTopSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(" 1. พชง.ควบคุมงาน/ผู้ควบคุมงานจ้าง"), null, $cellHCentered2);
-$table1->addCell(5500, ['borderTopSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(" 2. พชง.ควบคุมงาน/ผู้ควบคุมงานจ้าง"), null, $cellHCentered2);
+$table1->addCell(5500, ['borderTopSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(" 2. เรียน อ.ข _______/ ผจก._______"), null, $cellHCentered2);
 $table1->addRow();
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("   ดำเนินการรื้อถอนและรายการผลตาม กส.4 ป.47"), null, $cellHCentered2);
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("   ได้ทำการรือถอนแล้วเสร็จเมื่อวันที่________________ และได้ทำการส่งคืนอุปกรณ์เรียบร้อยตามเอกสารแนบ"), null, $cellHCentered2);
@@ -224,10 +225,10 @@ $table1->addRow();
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("   ลงชื่อ"), null, $cellHCentered2);
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("   ลงชื่อ"), null, $cellHCentered2);
 $table1->addRow();
-$table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("       (_____________________________________)"), null, $cellHCentered2);
+$table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("( " . $row1["Fname"] . " " . $row1["Lname"] . " )"), null, $cellHCentered1);
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("       (_____________________________________)"), null, $cellHCentered2);
 $table1->addRow();
-$table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(""), null, $cellHCentered2);
+$table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars($row1["Rank"] . " ผ" . $row1["Under"] . "." . $row1["pea"]), null, $cellHCentered1);
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(""), null, $cellHCentered2);
 $table1->addRow();
 $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars("   ลงวันที่___________________________________"), null, $cellHCentered2);
@@ -235,12 +236,11 @@ $table1->addCell(5500, ['borderRightSize' => 6, 'borderLeftSize' => 6])->addText
 $table1->addRow();
 $table1->addCell(5500, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(""), null, $cellHCentered2);
 $table1->addCell(5500, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6])->addText(htmlspecialchars(""), null, $cellHCentered2);
-
 
 
 
 // Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx');
+$objWriter->save('ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน_.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน_.docx';</script>";

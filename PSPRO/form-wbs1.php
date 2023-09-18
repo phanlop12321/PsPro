@@ -112,6 +112,9 @@ $num_rows = mysqli_num_rows($result9);
                   <a href="form-vender.php">ข้อมูลผู้รับจ้าง</a>
                 </li>
                 <li class="submenu-item ">
+                  <a href="form-demolish.php">แต่งตั้งคณะกรรมการตรวจรื้อถอน</a>
+                </li>
+                <li class="submenu-item ">
                   <a href="form-contract.php">ข้อมูลสัญญาจ้าง</a>
                 </li>
                 <li class="submenu-item ">

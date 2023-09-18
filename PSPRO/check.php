@@ -57,7 +57,7 @@ if (!$_SESSION["UserID"]) { //check session
       if ($st == "D" || $st == "E" || $st == "F" || $st == "G" || $st == "H" || $st == "I" || $st == "J" || $st == "K" || $st == "L") {
         $price2 = round($price2 / 1000, 2, PHP_ROUND_HALF_DOWN);
 
-
+ 
 
       }
       if ($st == "M") {

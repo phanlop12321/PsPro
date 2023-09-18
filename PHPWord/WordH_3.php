@@ -86,7 +86,7 @@ $WBS;
 $count = 0;
 $Under = '';
 $Nopaperdate = '';
-
+$rowNetwork = '';
 $priceAll = 0;
 
 $All_price_no_vat = 0;
@@ -123,108 +123,131 @@ $sql1 = "SELECT * FROM employee WHERE ID=$ID_employee";
 $result1 = $conn->query($sql1);
 $row1 = $result1->fetch_assoc();
 
-$sql6 = "SELECT * FROM new285data WHERE ( user = $User )  AND ( userid = $id  )";
-$result6 = $conn->query($sql6);
 
+$sql6 = "SELECT * FROM new285data WHERE ( user = $User )  AND ( userid = $id  ) AND ( type = 'Remove(งานรื้อถอน)') GROUP BY network";
+$result6 = $conn->query($sql6);
 
 require_once 'bootstrap.php';
 
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
+while ($row6 = $result6->fetch_assoc()) {
+  $fontStyleName1 = 'oneUserDefinedStyle1';
+  $phpWord->addFontStyle(
+    $fontStyleName1,
+    array('name' => 'TH SarabunIT๙', 'size' => 16, 'color' => '1B2232', 'bold' => false, 'spaceBefore' => 0, 'spaceAfter' => 0)
+  );
 
-$fontStyleName1 = 'oneUserDefinedStyle1';
-$phpWord->addFontStyle(
-  $fontStyleName1,
-  array('name' => 'TH SarabunIT๙', 'size' => 16, 'color' => '1B2232', 'bold' => false, 'spaceBefore' => 0, 'spaceAfter' => 0)
-);
+  $fontStyleName2 = 'oneUserDefinedStyle2';
+  $phpWord->addFontStyle(
+    $fontStyleName2,
+    array('name' => 'TH SarabunIT๙', 'size' => 16, 'color' => '1B2232', 'bold' => true, 'spaceBefore' => 4, 'spaceAfter' => 4)
+  );
 
-$fontStyleName2 = 'oneUserDefinedStyle2';
-$phpWord->addFontStyle(
-  $fontStyleName2,
-  array('name' => 'TH SarabunIT๙', 'size' => 16, 'color' => '1B2232', 'bold' => true, 'spaceBefore' => 4, 'spaceAfter' => 4)
-);
+  $fontStyleName3 = 'oneUserDefinedStyle3';
+  $phpWord->addFontStyle(
+    $fontStyleName3,
+    array('name' => 'TH SarabunIT๙', 'size' => 8, 'color' => '1B2232', 'bold' => false, 'spaceBefore' => 0, 'spaceAfter' => 0)
+  );
 
-$fontStyleName3 = 'oneUserDefinedStyle3';
-$phpWord->addFontStyle(
-  $fontStyleName3,
-  array('name' => 'TH SarabunIT๙', 'size' => 8, 'color' => '1B2232', 'bold' => false, 'spaceBefore' => 0, 'spaceAfter' => 0)
-);
+  $cellHCentered2 = array('spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
+  $cellHCentered1 = array('align' => 'center', 'spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
+  $cellRowContinue = array('borderSize' => 6, 'vMerge' => 'continue');
+  $styleCell = array('borderSize' => 6, 'vMerge' => 'restart', 'valign' => 'center', 'bgColor' => 'FFFFFF');
+  $section = $phpWord->addSection(['marginTop' => 100, 'marginLeft' => 500, 'marginRight' => 500, 'marginBottom' => 100]);
+  $section->addText(htmlspecialchars("รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า"), $fontStyleName2, $cellHCentered1);
+  $section->addText(htmlspecialchars("งานรือถอน หมายเลขงาน " . $row6["wbs"] . " โครงข่าย " . $row6["network"] . " แผนก " . $row6["job"]), $fontStyleName1, $cellHCentered2);
+  $section->addText(htmlspecialchars("สถานที่ตั้งทรัพย์สินที่รื้อถอน " . $row3["Address"] . " ทรัพย์สินที่รื้อถอนได้ก่อสร้างเมื่อ ปี พ.ศ. _________"), $fontStyleName1, $cellHCentered2);
 
-$cellHCentered2 = array('spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
-$cellHCentered1 = array('align' => 'center', 'spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1);
-$cellRowContinue = array('borderSize' => 6, 'vMerge' => 'continue');
-$styleCell = array('borderSize' => 6, 'vMerge' => 'restart', 'valign' => 'center', 'bgColor' => 'FFFFFF');
-$section = $phpWord->addSection(['marginTop' => 100, 'marginLeft' => 500, 'marginRight' => 500, 'marginBottom' => 100]);
-$section->addText(htmlspecialchars("รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า"), $fontStyleName2, $cellHCentered1);
-$section->addText(htmlspecialchars("งานรือถอน หมายเลขงาน __________โครงข่าย_________ แผนก_______"), $fontStyleName1, $cellHCentered2);
-$section->addText(htmlspecialchars("สถานที่ตั้งทรัพย์สินที่รื้อถอน " . $row3["Address"] . " ทรัพย์สินที่รื้อถอนได้ก่อสร้างเมื่อ ปี พ.ศ. _________"), $fontStyleName1, $cellHCentered2);
+  $styleTable = array('cellMargin' => 18);
+  $phpWord->addTableStyle('Fancy Table', $styleTable);
+  $table1 = $section->addTable('Fancy Table');
+  $table1->addRow(null, ['vMerge' => 'restart']);
+  $table1->addCell(1000, $styleCell)->addText(htmlspecialchars("ที่"), null, $cellHCentered1);
+  $table1->addCell(6000, $styleCell)->addText(htmlspecialchars("ชื่ออุปกรณ์"), null, $cellHCentered1);
+  $table1->addCell(1000, ['borderSize' => 6, 'gridSpan' => 2, 'valign' => 'center'])->addText(htmlspecialchars("จำนวน"), null, $cellHCentered1);
+  $table1->addCell(1000, ['borderSize' => 6, 'gridSpan' => 3, 'valign' => 'center'])->addText(htmlspecialchars("สภาพของอุปกรณ์"), null, $cellHCentered1);
+  $table1->addCell(200, $styleCell)->addText(htmlspecialchars("จำนวน ที่รื้อถอน"), null, $cellHCentered1);
+  $table1->addCell(1000, ['borderSize' => 6, 'gridSpan' => 2, 'valign' => 'center'])->addText(htmlspecialchars("การส่งคืนคลัง"), null, $cellHCentered1);
+  $table1->addCell(1000, $styleCell)->addText(htmlspecialchars("หมายเหตุ"), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, $cellRowContinue);
+  $table1->addCell(null, $cellRowContinue);
+  $table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ตามประมาณการ"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("จากสำรวจ"), null, $cellHCentered1);
+  $table1->addCell(330, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ดี"), null, $cellHCentered1);
+  $table1->addCell(330, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ชำรุด"), null, $cellHCentered1);
+  $table1->addCell(330, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ล้าสมัย"), null, $cellHCentered1);
+  $table1->addCell(null, $cellRowContinue);
+  $table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("จำนวน"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("เลขใบ ส่งคืน/ลว."), null, $cellHCentered1);
+  $table1->addCell(null, $cellRowContinue);
+  $rowNetwork = $row6['network'];
+  $sql1234 = "SELECT * FROM new285data WHERE    user = $User  AND ( userid = $id  ) AND ( type = 'Remove(งานรื้อถอน)') AND ( network  = '$rowNetwork')";
+  $result1234 = $conn->query($sql1234);
+  $x = 1;
+  while ($row5 = $result1234->fetch_assoc()) {
+    $data = $row5["id"];
+    $sqldata = "SELECT * FROM data WHERE ID = $data";
+    $resultdata = $conn->query($sqldata);
+    $rowdata = $resultdata->fetch_assoc();
+    if (isset($rowdata["NAME"])) {
+      $dataname = $rowdata["NAME"];
+      $dataunit = $rowdata["UNIT"];
+    } else {
+      $dataname = $row5["name"];
+      $dataunit = $row5["unit"];
+      if ($dataunit == 'EA') {
+        $dataunit = 'ชิ้น';
+      }
+    }
+    $table1->addRow();
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars($x), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars($dataname), null, $cellHCentered2);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars($row5['qty'] . " " . $dataunit), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars($row5['newqty'] . " " . $dataunit), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars(""), null, $cellHCentered1);
+    $x++;
+  }
 
-$styleTable = array('cellMargin' => 18);
-$phpWord->addTableStyle('Fancy Table', $styleTable);
-$table1 = $section->addTable('Fancy Table');
-$table1->addRow(null, ['vMerge' => 'restart']);
-$table1->addCell(500, $styleCell)->addText(htmlspecialchars("ที่"), null, $cellHCentered1);
-$table1->addCell(6000, $styleCell)->addText(htmlspecialchars("ชื่ออุปกรณ์"), null, $cellHCentered1);
-$table1->addCell(1000, ['borderSize' => 6, 'gridSpan' => 2, 'valign' => 'center'])->addText(htmlspecialchars("จำนวน"), null, $cellHCentered1);
-$table1->addCell(1000, ['borderSize' => 6, 'gridSpan' => 3, 'valign' => 'center'])->addText(htmlspecialchars("สภาพของอุปกรณ์"), null, $cellHCentered1);
-$table1->addCell(200, $styleCell)->addText(htmlspecialchars("จำนวน ที่รื้อถอน"), null, $cellHCentered1);
-$table1->addCell(1000, ['borderSize' => 6, 'gridSpan' => 2, 'valign' => 'center'])->addText(htmlspecialchars("การส่งคืนคลัง"), null, $cellHCentered1);
-$table1->addCell(1000, $styleCell)->addText(htmlspecialchars("หมายเหตุ"), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, $cellRowContinue);
-$table1->addCell(null, $cellRowContinue);
-$table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ตามประมาณการ"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("จากสำรวจ"), null, $cellHCentered1);
-$table1->addCell(330, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ดี"), null, $cellHCentered1);
-$table1->addCell(330, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ชำรุด"), null, $cellHCentered1);
-$table1->addCell(330, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("ล้าสมัย"), null, $cellHCentered1);
-$table1->addCell(null, $cellRowContinue);
-$table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("จำนวน"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6, 'valign' => 'center'])->addText(htmlspecialchars("เลขใบ ส่งคืน/ลว."), null, $cellHCentered1);
-$table1->addCell(null, $cellRowContinue);
-$table1->addRow();
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addCell(null, ['borderSize' => 6,])->addText(htmlspecialchars("1"), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("ลายมือชื่อผู้สำรวจ"), null, $cellHCentered1);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("ลายมือชื่อ พชง.ควบคุมงาน/ผู้ควบคุมงานจ้าง"), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("1______________________________ วันที่ ____________"), null, $cellHCentered1);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("    นาย....................... (พชง................)"), null, $cellHCentered2);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("ลงชื่อ____________________________"), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("     (____________________________)"), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("2______________________________ วันที่ ____________"), null, $cellHCentered1);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("    นาย....................... (พชง................)"), null, $cellHCentered2);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("ลงวันที่__________________"), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("3______________________________ วันที่ ____________"), null, $cellHCentered1);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("    นาย....................... (พชง................)"), null, $cellHCentered2);
-$table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
-$table1->addRow();
-$table1->addCell(null, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars(""), null, $cellHCentered2);
-$table1->addCell(null, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
-// Saving the document as OOXML file...
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("ลายมือชื่อผู้สำรวจ"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("ลายมือชื่อ พชง.ควบคุมงาน/ผู้ควบคุมงานจ้าง"), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("1______________________________ วันที่ ____________"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("    นาย " . $row3["FName_Demolish_Check"] . " " . $row3["LName_Demolish_Check"] . "   ( " . $row3["Rank_Demolish_Check"] . " )"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("ลงชื่อ____________________________"), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("( " . $row1["Fname"] . " " . $row1["Lname"] . " )"), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("2______________________________ วันที่ ____________"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars($row1["Rank"] . " ผ" . $row1["Under"] . "." . $row1["pea"]), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("    นาย " . $row3["FName_Demolish_Check2"] . " " . $row3["LName_Demolish_Check2"] . "   ( " . $row3["Rank_Demolish_Check2"] . " )"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars("ลงวันที่__________________"), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("3______________________________ วันที่ ____________"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars("    นาย " . $row3["FName_Demolish_Check3"] . " " . $row3["LName_Demolish_Check3"] . "   ( " . $row3["Rank_Demolish_Check3"] . " )"), null, $cellHCentered1);
+  $table1->addCell(null, ['borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  $table1->addRow();
+  $table1->addCell(null, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 4])->addText(htmlspecialchars(""), null, $cellHCentered2);
+  $table1->addCell(null, ['borderBottomSize' => 6, 'borderRightSize' => 6, 'borderLeftSize' => 6, 'gridSpan' => 7])->addText(htmlspecialchars(""), null, $cellHCentered1);
+  // Saving the document as OOXML file...
+}
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx');
+$objWriter->save('รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า__.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า__.docx';</script>";

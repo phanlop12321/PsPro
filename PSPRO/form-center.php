@@ -97,6 +97,9 @@ $row3 = $result3->fetch_assoc();
                   <a href="form-vender.php">ข้อมูลผู้รับจ้าง</a>
                 </li>
                 <li class="submenu-item ">
+                  <a href="form-demolish.php">แต่งตั้งคณะกรรมการตรวจรื้อถอน</a>
+                </li>
+                <li class="submenu-item ">
                   <a href="form-contract.php">ข้อมูลสัญญาจ้าง</a>
                 </li>
                 <li class="submenu-item ">
@@ -149,6 +152,30 @@ $row3 = $result3->fetch_assoc();
                             <?php if (isset($row3["po"])) { ?>
                               <li class="submenu-item ">
                                 <a href="../PHPSpreadsheet/excel.php?create=<?= $id; ?>" target="_blank">จค 01</a>
+                              </li>
+                              <!-- <li class="submenu-item ">
+                                <a href="../PHPWord/WordG.php?create=<?= $id; ?>"
+                                  target="_blank">ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า</a>
+                              </li> -->
+                              <li class="submenu-item ">
+                                <a href="../PHPWord/WordH.php?create=<?= $id; ?>"
+                                  target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                              </li>
+                              <!-- <li class="submenu-item ">
+                                <a href="../PHPWord/WordH_2.php?create=<?= $id; ?>"
+                                  target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                              </li> -->
+                              <li class="submenu-item ">
+                                <a href="../PHPWord/WordH_3.php?create=<?= $id; ?>"
+                                  target="_blank">รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า</a>
+                              </li>
+                              <li class="submenu-item ">
+                                <a href="../PHPWord/WordI.php?create=<?= $id; ?>"
+                                  target="_blank">แบบฟอร์มตรวจสอบมาตรฐานงานก่อสร้างและปรับปรุงระบบจำหน่าย</a>
+                              </li>
+                              <li class="submenu-item ">
+                                <a href="../PHPWord/WordJ.php?create=<?= $id; ?>"
+                                  target="_blank">การส่งมอบงานก่อสร้างระบบไฟฟ้าและขออนุมัติจ่ายกระแสไฟฟ้า</a>
                               </li>
                             <?php }
                           }

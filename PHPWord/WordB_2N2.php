@@ -1,10 +1,5 @@
 <?php
 session_start();
-if ($_SESSION["Depratment"] == 02) { //check session
-
-  Header("Location: WordB_2N2.php"); //ไม่พบผู้ใช้กระโดดกลับไปหน้า login form 
-
-}
 
 $dayTH = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
 $monthTH = [null, 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
@@ -72,16 +67,15 @@ function ReadNumber($number)
   return $ret;
 }
 include('connection.php');
-
 $price = 0;
-
 $User = $_SESSION["User"];
 $id = $_SESSION["ID"];
-
-$sql4 = "SELECT wbs,factor,wage FROM new285data WHERE  userid = $id AND ( user = '$User' )";
+$sql3 = "SELECT Address,Name,Estimate,Estimate_Date FROM data285 WHERE  id = $id AND ( user = '$User' )";
+$result3 = $conn->query($sql3);
+$row3 = $result3->fetch_assoc();
+$sql4 = "SELECT wbs FROM new285data WHERE  userid = $id AND ( user = '$User' )";
 $result4 = $conn->query($sql4);
 $row4 = $result4->fetch_assoc();
-
 require_once 'bootstrap.php';
 
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -108,19 +102,6 @@ $phpWord->addFontStyle(
   )
 );
 
-$fontStyleName2 = 'oneUserDefinedStyle2';
-$phpWord->addFontStyle(
-  $fontStyleName2,
-  array(
-    'name' => 'TH SarabunIT๙',
-    'size' => 16,
-    'color' => '1B2232',
-    'bold' => true,
-    'bgColor' => '1B2232'
-  )
-);
-
-
 $fontStyleName3 = 'oneUserDefinedStyle3';
 $phpWord->addFontStyle(
   $fontStyleName3,
@@ -136,7 +117,7 @@ $cellHCentered3 = array('spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1
 $cellHCentered2 = array('cellMargin' => 80, 'spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1, 'align' => 'both');
 
 $section = $phpWord->addSection(['marginTop' => 500, 'marginLeft' => 500, 'marginRight' => 500, 'marginBottom' => 500]);
-$section->addText(htmlspecialchars("\t\t\tแบบฟอร์มการคำนวณราคากลางงานจ้างเหมาระบบไฟฟ้า(เฉพาะค่าเเรง)"), $fontStyleName2, $cellHCentered2);
+$section->addText(htmlspecialchars("\t\t\tแบบฟอร์มการคำนวณราคากลางงานจ้างเหมาระบบไฟฟ้า(เฉพาะค่าเเรง)"), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("การคำนวณราคากลางขยายเขตฯ " . $row3["Name"] . "  " . $row3["Address"]), $fontStyleName1, $cellHCentered2);
 $section->addText(htmlspecialchars("อนุมัติประมาณการเลขที่ : " . $row3["Estimate"] . " ลว. " . thai_date_fullmonth(strtotime($row3["Estimate_Date"])) . " WBS " . $row4["wbs"]));
 
@@ -151,32 +132,19 @@ $cellVCentered = array('spaceBefore' => 0, 'spaceAfter' => 0, 'lineHeight' => 1.
 $fontStyle = array('bold' => true, 'spaceBefore' => 0, 'spaceAfter' => 0, 'marginBottom' => 0);
 $phpWord->addTableStyle('Colspan Rowspan', $styleTable);
 $table = $section->addTable('Colspan Rowspan');
-$table->addRow();
-$cell1 = $table->addCell(6000, $cellColSpan2);
-$textrun1 = $cell1->addTextRun($cellHCentered);
-$textrun1->addText(htmlspecialchars('เงินล่วงหน้าจ่าย.......'), $fontStyle);
-
-$cell2 = $table->addCell(1500, $cellColSpan);
-$textrun2 = $cell2->addTextRun($cellHCentered);
-$textrun2->addText(htmlspecialchars('เงินประกันผลงานหัก.......'), $fontStyle);
-
-$cell3 = $table->addCell(1500, $cellColSpan);
-$textrun3 = $cell3->addTextRun($cellHCentered);
-$textrun3->addText(htmlspecialchars('ใช้Factor = ' . $row4["factor"]), $fontStyle);
-
 
 $table->addRow();
 $table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ลำดับ'), $fontStyle, $cellHCentered);
 $table->addCell(5000, $cellVCentered)->addText(htmlspecialchars('รายการ'), $fontStyle, $cellHCentered);
 $table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('จำนวน'), $fontStyle, $cellHCentered);
 $table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('หน่วย'), $fontStyle, $cellHCentered);
-$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ค่าแรงตาม ประมาณการ 100%'), $fontStyle, $cellHCentered);
-$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ค่าแรงตาม ประมาณการ ' . $row4["wage"] . '%'), $fontStyle, $cellHCentered);
-$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ราคากลาง ประมาณการ x' . $row4["factor"]), $fontStyle, $cellHCentered);
-$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ราคา ต่อหน่วย (บาท)'), $fontStyle, $cellHCentered);
+$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ราคาต่อหน่วย ไม่รวมภาษี'), $fontStyle, $cellHCentered);
+$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ราคาตกลงจ้าง'), $fontStyle, $cellHCentered);
+$table->addCell(500, $cellVCentered)->addText(htmlspecialchars('ภาษี 7%'), $fontStyle, $cellHCentered);
+$table->addCell(1000, $cellVCentered)->addText(htmlspecialchars('ราคารวมทั้งสิ้น'), $fontStyle, $cellHCentered);
 
 
-$sql123 = "SELECT * FROM new285data WHERE    user = $User   AND ( userid = $id  ) GROUP BY job";
+$sql123 = "SELECT job FROM new285data WHERE    user = $User   AND ( userid = $id  ) GROUP BY job";
 $result123 = $conn->query($sql123);
 $type = '';
 
@@ -239,15 +207,15 @@ while ($row123 = $result123->fetch_assoc()) {
       $table->addRow();
       $table->addCell()->addText(htmlspecialchars($i), $fontStyleName3, $cellHCentered);
       $table->addCell()->addText(htmlspecialchars($dataname), $fontStyleName3, $cellHCentered3);
-      $table->addCell()->addText(htmlspecialchars(number_format($row["qty"], 2)), $fontStyleName3, $cellHCentered);
+      $table->addCell()->addText(htmlspecialchars($row["qty"]), $fontStyleName3, $cellHCentered);
       $table->addCell()->addText(htmlspecialchars($dataunit), $fontStyleName3, $cellHCentered);
       $table->addCell()->addText(htmlspecialchars(number_format($row["price"], 2)), $fontStyleName3, $cellHCentered);
-      $table->addCell()->addText(htmlspecialchars(number_format($row["price"] * ($row["wage"] / 100), 2)), $fontStyleName3, $cellHCentered);
-      $table->addCell()->addText(htmlspecialchars(number_format($row["factor"] * $row["price"] * ($row["wage"] / 100), 2)), $fontStyleName3, $cellHCentered);
-      $table->addCell()->addText(htmlspecialchars(number_format($row["factor"] * $row["price"] * ($row["wage"] / 100) / $row["qty"], 2)), $fontStyleName3, $cellHCentered);
-      $priceAll1 = round($row["price"] + $priceAll1, 2);
-      $priceAll2 = round(($row["price"] * ($row["wage"] / 100)) + $priceAll2, 2);
-      $priceAll3 = round(($row["factor"] * $row["price"] * ($row["wage"] / 100)) + $priceAll3, 2);
+      $table->addCell()->addText(htmlspecialchars(number_format($row["price"] * $row["qty"], 2)), $fontStyleName3, $cellHCentered);
+      $table->addCell()->addText(htmlspecialchars(number_format($row["price"] * $row["qty"] * 0.07, 2)), $fontStyleName3, $cellHCentered);
+      $table->addCell()->addText(htmlspecialchars(number_format(($row["price"] * $row["qty"] * 0.07) + ($row["price"] * $row["qty"]), 2)), $fontStyleName3, $cellHCentered);
+      $priceAll1 = $row["price"] + $priceAll1;
+      $priceAll2 = ($row["price"] * $row["qty"]) + $priceAll2;
+      $priceAll3 = ($row["price"] * $row["qty"] * 0.07) + $priceAll3;
       $i++;
     }
   }
@@ -262,7 +230,7 @@ while ($row123 = $result123->fetch_assoc()) {
   $table->addCell()->addText(htmlspecialchars(number_format($priceAll1, 2)), $fontStyleName2, $cellHCentered);
   $table->addCell()->addText(htmlspecialchars(number_format($priceAll2, 2)), $fontStyleName2, $cellHCentered);
   $table->addCell()->addText(htmlspecialchars(number_format($priceAll3, 2)), $fontStyleName2, $cellHCentered);
-  $table->addCell()->addText('', $fontStyleName3, $cellHCentered);
+  $table->addCell()->addText(htmlspecialchars(number_format($priceAll3 + $priceAll2, 2)), $fontStyleName2, $cellHCentered);
 }
 
 $table->addRow();
@@ -273,9 +241,9 @@ $table->addCell()->addText('', $fontStyleName3, $cellHCentered);
 $table->addCell()->addText(htmlspecialchars(number_format($priceAllEnd1, 2)), $fontStyleName2, $cellHCentered);
 $table->addCell()->addText(htmlspecialchars(number_format($priceAllEnd2, 2)), $fontStyleName2, $cellHCentered);
 $table->addCell()->addText(htmlspecialchars(number_format($priceAllEnd3, 2)), $fontStyleName2, $cellHCentered);
-$table->addCell()->addText('', $fontStyleName3, $cellHCentered);
+$table->addCell()->addText(htmlspecialchars(number_format($priceAllEnd3 + $priceAllEnd2, 2)), $fontStyleName2, $cellHCentered);
 // Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$objWriter->save('เอกสารแนบ.docx');
+$objWriter->save('เอกสารแนบ_.docx');
 
-echo "<script type='text/javascript'>window.location.href = 'เอกสารแนบ.docx';</script>";
+echo "<script type='text/javascript'>window.location.href = 'เอกสารแนบ_.docx';</script>";

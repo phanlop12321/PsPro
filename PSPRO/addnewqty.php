@@ -41,7 +41,7 @@ if (!$_SESSION["UserID"]) { //check session
     for ($i = 1; $i < $count; $i++) {
         echo "kkkk";
         echo $qty[$i];
-        $sql = "UPDATE end_data SET qty = '$qty[$i]' WHERE (network = '$network[$i]' ) AND ( id = $id[$i] )";
+        $sql = "UPDATE new285data SET newqty = '$qty[$i]' WHERE (network = '$network[$i]' ) AND ( id = $id[$i] )";
 
         if (mysqli_query($conn, $sql)) {
             echo "New record created successfully";

@@ -17,7 +17,7 @@ if (isset($_GET['create'])) {
 
 $User = $_SESSION["User"];
 $id = $_SESSION["ID"];
-
+$etc = "";
 $sql3 = "SELECT * FROM data285 WHERE  id = $id AND ( user = '$User' )";
 $result3 = $conn->query($sql3);
 $row3 = $result3->fetch_assoc();
@@ -39,7 +39,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-
+if ($row3["etc"] == "") {
+    $etc = "ผลงานที่ส่งมอบครั้งนี้ถูกต้องครบถ้วน เป็นไปตามรูปแบบ รายละเอียด และข้อกำหนดในสัญญาทุกประการ";
+} else {
+    $etc = $row3["etc"];
+}
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setName('TH SarabunPSK');
@@ -128,13 +132,13 @@ $spreadsheet->getActiveSheet()->setCellValue('A1', 'การไฟฟ้าส�
     ->setCellValue('A2', 'รายละเอียดของงานเพื่อขออนุมัติจ่าย')
     ->setCellValue('A3', $row3['Name'])
     ->setCellValue('K3', 'จำนวนเงินตามสัญญา')
-    ->setCellValue('M3', '480676.1')
+    // ->setCellValue('M3', '480676.1')
     ->setCellValue('N3', 'ผู้รับจ้าง')
     ->setCellValue('O3', $row2['fname'] . ' ' . $row2['lname'])
     ->setCellValue('B4', 'เริ่ม วันที่')
-    ->setCellValue('C4', '9/11/2565')
+    ->setCellValue('C4', '')
     ->setCellValue('F4', 'สิ้นสุดวันที่')
-    ->setCellValue('G4', '11/11/2565')
+    ->setCellValue('G4', '')
     ->setCellValue('J5', 'สำหรับการไฟฟ้าส่วนภูมิภาค')
     ->setCellValue('A5', 'สำหรับผู้รับจ้าง')
     ->setCellValue('A6', 'ลำดับ')
@@ -152,7 +156,7 @@ $spreadsheet->getActiveSheet()->setCellValue('A1', 'การไฟฟ้าส�
     ->setCellValue('J7', 'จำนวน')
     ->setCellValue('K7', 'เป็นเงิน')
     ->setCellValue('L6', 'เรียน  คณะกรรมการตรวจรับงานจ้าง')
-    ->setCellValue('L7', 'ผลงานที่ส่งมอบครั้งนี้ถูกต้องครบถ้วน เป็นไปตามรูปแบบ รายละเอียด และข้อกำหนดในสัญญาทุกประการ')
+    ->setCellValue('L7', $etc)
     ->setCellValue('L10', 'งานแล้วเสร็จเมื่อวันที่______________________')
     ->setCellValue('L11', '▢ งานแล้วเสร็จตามกำหนดเวลา')
     ->setCellValue('L12', '▢ งานแล้วเสร็จช้ากว่ากำหนดตามสัญญา……… วัน')
@@ -162,18 +166,18 @@ $spreadsheet->getActiveSheet()->setCellValue('A1', 'การไฟฟ้าส�
     ->setCellValue('P15', 'ตำแหน่ง: ' . $row1['Rank'] . ' ' . $row1['Under'] . ' ' . $row1['pea'])
     ->setCellValue('L16', 'เรียน')
     ->setCellValue('M17', 'คณะกรรมการตรวจรับอุปกรณ์ และงานจ้างได้ทำการตรวจรับงานดังกล่าวแล้วเมื่อ วันที่')
-    ->setCellValue('L18', '▢ ถูกต้องครบถ้วนตามสัญญาทุกประการทุกประการ เห็นควรรับมอบงาน และจ่ายเงินให้แก่ผู้รับจ้างดังนี้')
+    ->setCellValue('L18', '▢ ถูกต้องครบถ้วนตามสัญญาทุกประการ เห็นควรรับมอบงาน และจ่ายเงินให้แก่ผู้รับจ้างดังนี้')
     ->setCellValue('L19', '▢ ผู้รับจ้างส่งมอบงานมีรายละเอียดส่วนใหญ่ถูกต้องตามสัญญา และมีรายละเอียดส่วนย่อยที่ไม่ใช่สาระสำคัญแตกต่าง')
     ->setCellValue('L20', 'จากสัญญา และไม่ก่อให้เกิดความเสียหายต่อการใช้งาน จึงเห็นควรรับมอบงาน และอนุมัติจ่ายเงินให้แก่ผู้รับจ้างดังนี้')
     ->setCellValue('L21', 'ค่าจ้าง จำนวน')
-    ->setCellValue('L22', 'จ่าย')
+    ->setCellValue('L22', 'จำนวนเงินตามสัญญา')
     ->setCellValue('L24', 'บวก ภาษีมูลค่าเพิ่ม')
     ->setCellValue('L26', 'รวมทั้งสิ้น')
     ->setCellValue('L27', 'หัก   - ค่าปรับส่งงานเกินเวลา')
     ->setCellValue('L28', '     - ค่าใช้จ่ายผู้ควบคุมงาน')
     ->setCellValue('L29', '     - ค่าชดเชย / Penalty')
     ->setCellValue('L30', '     - ค่าใช้จ่ายอื่น ๆ')
-    ->setCellValue('L31', 'เงินนนนนนนนนนนนนนนนนนนนนนนนนนนน')
+    // ->setCellValue('L31', 'เงินนนนนนนนนนนนนนนนนนนนนนนนนนนน')
     ->setCellValue('L34', 'ลงชื่อ …….....………..……………………      ')
     ->setCellValue('L35', ' ( ' . $row3['FName_Chairman_Check'] . ' ' . $row3['LName_Chairman_Check'] . ' )')
     ->setCellValue('L38', 'ลงชื่อ …….....………..……………………      ')
@@ -183,14 +187,14 @@ $spreadsheet->getActiveSheet()->setCellValue('A1', 'การไฟฟ้าส�
     ->setCellValue('L45', 'อนุมัติ ')
     ->setCellValue('L47', '..............................................................................................................')
     ->setCellValue('L50', '(                                              )')
-    ->setCellValue('P21', 12234)
+    // ->setCellValue('P21', 12234)
     ->setCellValue('Q21', 'บาท')
-    ->setCellValue('P22', 12234)
+    // ->setCellValue('P22', 12234)
     ->setCellValue('Q22', 'บาท')
-    ->setCellValue('P24', 12234)
+    // ->setCellValue('P24', 12234)
     ->setCellValue('Q24', 'บาท')
 
-    ->setCellValue('P26', 12234)
+    // ->setCellValue('P26', 12234)
     ->setCellValue('Q26', 'บาท')
     ->setCellValue('P27', ' ')
     ->setCellValue('Q27', 'บาท')
@@ -200,8 +204,8 @@ $spreadsheet->getActiveSheet()->setCellValue('A1', 'การไฟฟ้าส�
     ->setCellValue('Q29', 'บาท')
     ->setCellValue('P30', ' ')
     ->setCellValue('Q30', 'บาท')
-    ->setCellValue('P31', 12234)
-    ->setCellValue('Q31', 'บาท')
+    // ->setCellValue('P31', 12234)
+    // ->setCellValue('Q31', 'บาท')
 
     ->setCellValue('P34', 'ประธานกรรมการ')
     ->setCellValue('P35', $row3['Rank_C_Check'])
@@ -221,6 +225,7 @@ $result123 = $conn->query($sql123);
 $type = '';
 $i = 8;
 $price = 0;
+$priceA = 0;
 //$num = 1;
 while ($row123 = $result123->fetch_assoc()) {
     $job = $row123["job"];
@@ -246,8 +251,9 @@ while ($row123 = $result123->fetch_assoc()) {
         while ($row12 = $result12->fetch_assoc()) {
             $data = $row12["id"];
             $sqldata = "SELECT * FROM data WHERE ID = $data";
-            $resultdata = $conn->query($sqldata);
-            $rowdata = $resultdata->fetch_assoc();
+            if ($resultdata = $conn->query($sqldata)) {
+                $rowdata = $resultdata->fetch_assoc();
+            }
 
             if (isset($rowdata["NAME"])) {
                 $dataname = $rowdata["NAME"];
@@ -267,15 +273,48 @@ while ($row123 = $result123->fetch_assoc()) {
                 $spreadsheet->getActiveSheet()->setCellValue('A' . $i, $num);
                 $spreadsheet->getActiveSheet()->setCellValue('D' . $i, $row12["qty"]);
                 $spreadsheet->getActiveSheet()->setCellValue('E' . $i, $dataunit);
-                $spreadsheet->getActiveSheet()->setCellValue('F' . $i, $row12["newprice"]);
-                $spreadsheet->getActiveSheet()->setCellValue('G' . $i, $row12["newprice"] * $row12["qty"]);
-                $spreadsheet->getActiveSheet()->setCellValue('H' . $i, $row12["qty"]);
-                $spreadsheet->getActiveSheet()->setCellValue('I' . $i, $row12["newprice"] * $row12["qty"]);
-                $spreadsheet->getActiveSheet()->setCellValue('J' . $i, $row12["qty"]);
-                $spreadsheet->getActiveSheet()->setCellValue('K' . $i, $row12["newprice"] * $row12["qty"]);
+                $spreadsheet->getActiveSheet()->setCellValue('F' . $i, number_format($row12["newprice"], 2));
+                $spreadsheet->getActiveSheet()->setCellValue('G' . $i, number_format($row12["newprice"] * $row12["qty"], 2));
+                $spreadsheet->getActiveSheet()->setCellValue('H' . $i, $row12["newqty"]);
+                $spreadsheet->getActiveSheet()->setCellValue('I' . $i, number_format($row12["newprice"] * $row12["newqty"], 2));
+                $spreadsheet->getActiveSheet()->setCellValue('J' . $i, $row12["newqty"]);
+                $spreadsheet->getActiveSheet()->setCellValue('K' . $i, number_format($row12["newprice"] * $row12["newqty"], 2));
+                if ($row12["qty"] !== $row12["newqty"]) {
+                    $spreadsheet->getActiveSheet()->getStyle('A' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('B' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('D' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('E' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('F' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('G' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('H' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('I' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('J' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0')
+                        ->getActiveSheet()->getStyle('K' . $i)->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setARGB('FFFFE0');
+                }
                 $i++;
                 $num++;
-                $price = ($row12["price"] * $row12["qty"]) + $price;
+                $price = ($row12["newprice"] * $row12["newqty"]) + $price;
+                $priceA = ($row12["newprice"] * $row12["qty"]) + $priceA;
             }
 
         }
@@ -284,7 +323,11 @@ while ($row123 = $result123->fetch_assoc()) {
 $sheet->mergeCells('A' . $i . ':C' . $i);
 $spreadsheet->getActiveSheet()->setCellValue('A' . $i, 'เจ้าหน้าที่รับมอบอำนาจจากผู้รับจ้าง');
 $spreadsheet->getActiveSheet()->setCellValue('J' . $i, 'รวม');
-$spreadsheet->getActiveSheet()->setCellValue('K' . $i, $price);
+$spreadsheet->getActiveSheet()->setCellValue('K' . $i, number_format($price, 2));
+$spreadsheet->getActiveSheet()->setCellValue('M3', number_format($priceA, 2));
+$spreadsheet->getActiveSheet()->setCellValue('P26', number_format($priceA * 0.07 + $priceA, 2));
+$spreadsheet->getActiveSheet()->setCellValue('P24', number_format($priceA * 0.07, 2));
+$spreadsheet->getActiveSheet()->setCellValue('P22', number_format($priceA, 2));
 $sheet->getStyle('J' . $i . ':K' . $i)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
 $sheet->getStyle('A' . $i . ':K' . $i + 4)->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);

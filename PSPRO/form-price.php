@@ -103,6 +103,9 @@ $rowcon = $resultcon->fetch_assoc();
                                     <a href="form-vender.php">ข้อมูลผู้รับจ้าง</a>
                                 </li>
                                 <li class="submenu-item ">
+                                    <a href="form-demolish.php">แต่งตั้งคณะกรรมการตรวจรื้อถอน</a>
+                                </li>
+                                <li class="submenu-item ">
                                     <a href="form-contract.php">ข้อมูลสัญญาจ้าง</a>
                                 </li>
                                 <li class="submenu-item ">
@@ -159,6 +162,30 @@ $rowcon = $resultcon->fetch_assoc();
                                                         <?php if (isset($row3["po"])) { ?>
                                                             <li class="submenu-item ">
                                                                 <a href="../PHPSpreadsheet/excel.php?create=<?= $id; ?>" target="_blank">จค 01</a>
+                                                            </li>
+                                                            <!-- <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordG.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติวางเงินประกันจ้างเหมาเอกชนช่วยงานก่อสร้างระบบจำหน่ายไฟฟ้า</a>
+                                                            </li> -->
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                                                            </li>
+                                                            <!-- <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH_2.php?create=<?= $id; ?>"
+                                                                    target="_blank">ขออนุมัติสำรวจทรัพย์สินระบบไฟฟ้าเพื่อการรื้อถอน</a>
+                                                            </li> -->
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordH_3.php?create=<?= $id; ?>"
+                                                                    target="_blank">รายงานการสำรวจและการรื้อถอนทรัพย์สินอุปกรณ์ระบบไฟฟ้า</a>
+                                                            </li>
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordI.php?create=<?= $id; ?>"
+                                                                    target="_blank">แบบฟอร์มตรวจสอบมาตรฐานงานก่อสร้างและปรับปรุงระบบจำหน่าย</a>
+                                                            </li>
+                                                            <li class="submenu-item ">
+                                                                <a href="../PHPWord/WordJ.php?create=<?= $id; ?>"
+                                                                    target="_blank">การส่งมอบงานก่อสร้างระบบไฟฟ้าและขออนุมัติจ่ายกระแสไฟฟ้า</a>
                                                             </li>
                                                         <?php }
                                                     }
@@ -239,8 +266,10 @@ $rowcon = $resultcon->fetch_assoc();
                                                         while ($row = $result->fetch_assoc()) {
                                                             $data = $row["id"];
                                                             $sqldata = "SELECT * FROM data WHERE ID = $data";
-                                                            $resultdata = $conn->query($sqldata);
-                                                            $rowdata = $resultdata->fetch_assoc();
+
+                                                            if ($resultdata = $conn->query($sqldata)) {
+                                                                $rowdata = $resultdata->fetch_assoc();
+                                                            }
                                                             if ($row["price"] != 0) {
 
                                                                 ?>
@@ -282,10 +311,12 @@ $rowcon = $resultcon->fetch_assoc();
                                                                             value="<?= $row["id"]; ?>">
                                                                         <input type="hidden" name='network[<?= $ii ?>]'
                                                                             value="<?= $row5["network"]; ?>">
+                                                                        <input type="hidden" name='qty[<?= $ii ?>]'
+                                                                            value="<?= $row["qty"]; ?>">
                                                                     </td>
                                                                     <td>
                                                                         <?php if (isset($row["newprice"])) {
-                                                                            echo number_format($row["qty"] * $row["newprice"]);
+                                                                            echo number_format($row["qty"] * $row["newprice"], 2);
                                                                         } ?>
                                                                     </td>
 

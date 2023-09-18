@@ -6,14 +6,9 @@ if (!$_SESSION["UserID"]) { //check session
 $SESSIONuser = $_SESSION["User"];
 $SESSIONid = $_SESSION["ID"];
 include('connection.php');
-$id = $_GET["id"];
-$network = $_GET["network"];
 
-if ($network == "") {
-  $sql = "DELETE FROM new285data WHERE id = '$id' AND user = $SESSIONuser AND userid = $SESSIONid";
-} else {
-  $sql = "DELETE FROM new285data WHERE id = '$id' AND network = '$network' ";
-}
+$sql = "DELETE FROM new285data WHERE user = $SESSIONuser AND userid = $SESSIONid";
+
 
 if ($conn->query($sql) === TRUE) {
   echo "Record deleted successfully";
